@@ -4,7 +4,7 @@ import { X, Settings, Save, Download, Upload, RotateCcw, Sparkles, User, Folder,
 import { ConfigManager, PortfolioConfig } from '../../services/configManager';
 import { audioSynth } from '../../utils/audioSynthesizer';
 
-const HARDCODED_ADMIN_PASSWORD = 'vis200198';
+const HARDCODED_ADMIN_PASSWORD = 'vis2007198';
 const AUTH_SESSION_KEY = 'quantum_admin_auth_session';
 
 interface AdminEditorModalProps {
