@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Settings, Save, Download, Upload, RotateCcw, Check, Sparkles, User, Folder, Code2, Globe } from 'lucide-react';
+import { X, Settings, Save, Download, Upload, RotateCcw, Sparkles, User, Folder, Code2, Globe, Briefcase, GraduationCap } from 'lucide-react';
 import { ConfigManager, PortfolioConfig } from '../../services/configManager';
 import { audioSynth } from '../../utils/audioSynthesizer';
 
@@ -12,7 +12,7 @@ interface AdminEditorModalProps {
 
 export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onClose, onShowToast }) => {
   const [config, setConfig] = useState<PortfolioConfig>(ConfigManager.getConfig());
-  const [activeTab, setActiveTab] = useState<'personal' | 'projects' | 'skills' | 'json'>('personal');
+  const [activeTab, setActiveTab] = useState<'personal' | 'projects' | 'timeline' | 'skills' | 'json'>('personal');
   const [jsonInput, setJsonInput] = useState('');
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onCl
             <div className="flex items-center gap-2">
               <button
                 onClick={handleSave}
-                className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,243,255,0.3)]"
+                className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 text-white text-xs font-mono font-medium flex items-center gap-1.5 shadow-[0_0_15px_rgba(0,243,255,0.3)] cursor-pointer"
               >
                 <Save className="w-4 h-4" /> Save & Apply Live
               </button>
@@ -129,7 +129,17 @@ export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onCl
                   : 'glass-pill text-slate-400 hover:text-white'
               }`}
             >
-              <User className="w-3.5 h-3.5 inline mr-1.5" /> Personal Telemetry
+              <User className="w-3.5 h-3.5 inline mr-1.5" /> Personal Info
+            </button>
+            <button
+              onClick={() => setActiveTab('timeline')}
+              className={`px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all ${
+                activeTab === 'timeline'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-400/40'
+                  : 'glass-pill text-slate-400 hover:text-white'
+              }`}
+            >
+              <GraduationCap className="w-3.5 h-3.5 inline mr-1.5" /> College & Timeline
             </button>
             <button
               onClick={() => setActiveTab('projects')}
@@ -232,7 +242,81 @@ export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onCl
               </div>
             )}
 
-            {/* TAB 2: Projects Manager */}
+            {/* TAB 2: College & Timeline Manager */}
+            {activeTab === 'timeline' && (
+              <div className="space-y-6">
+                {config.experience.map((exp, idx) => (
+                  <div key={exp.id} className="glass-card p-4 rounded-2xl space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono text-cyan-400 font-bold">Item #{idx + 1}: {exp.role}</span>
+                      <span className="px-2 py-0.5 text-[10px] font-mono bg-cyan-500/20 text-cyan-300 rounded">
+                        {exp.type}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-slate-400">Role / Degree Title</label>
+                        <input
+                          type="text"
+                          value={exp.role}
+                          onChange={e => {
+                            const updated = [...config.experience];
+                            updated[idx].role = e.target.value;
+                            setConfig({ ...config, experience: updated });
+                          }}
+                          className="w-full glass-input rounded-xl px-3 py-1.5 text-xs text-white"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-slate-400">College / Institution / Company</label>
+                        <input
+                          type="text"
+                          value={exp.organization}
+                          onChange={e => {
+                            const updated = [...config.experience];
+                            updated[idx].organization = e.target.value;
+                            setConfig({ ...config, experience: updated });
+                          }}
+                          className="w-full glass-input rounded-xl px-3 py-1.5 text-xs text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-slate-400">Period / Years</label>
+                        <input
+                          type="text"
+                          value={exp.period}
+                          onChange={e => {
+                            const updated = [...config.experience];
+                            updated[idx].period = e.target.value;
+                            setConfig({ ...config, experience: updated });
+                          }}
+                          className="w-full glass-input rounded-xl px-3 py-1.5 text-xs text-white"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-mono text-slate-400">Location</label>
+                        <input
+                          type="text"
+                          value={exp.location}
+                          onChange={e => {
+                            const updated = [...config.experience];
+                            updated[idx].location = e.target.value;
+                            setConfig({ ...config, experience: updated });
+                          }}
+                          className="w-full glass-input rounded-xl px-3 py-1.5 text-xs text-white"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* TAB 3: Projects Manager */}
             {activeTab === 'projects' && (
               <div className="space-y-6">
                 {config.projects.map((proj, idx) => (
@@ -285,7 +369,7 @@ export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onCl
               </div>
             )}
 
-            {/* TAB 3: Skill Matrix */}
+            {/* TAB 4: Skill Matrix */}
             {activeTab === 'skills' && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {config.skills.map((s, idx) => (
@@ -314,7 +398,7 @@ export const AdminEditorModal: React.FC<AdminEditorModalProps> = ({ isOpen, onCl
               </div>
             )}
 
-            {/* TAB 4: JSON Raw Editor / Backup */}
+            {/* TAB 5: JSON Raw Editor / Backup */}
             {activeTab === 'json' && (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">

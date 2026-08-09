@@ -2,23 +2,23 @@ import { CertificateItem } from '../types';
 
 export const certificatesData: CertificateItem[] = [
   {
-    id: "cert-flutter-dev",
-    title: "Senior Front-End & Mobile Software Engineering",
-    issuer: "Meta / Professional Certification",
+    id: "cert-google-codecademy",
+    title: "Google Certified Software Developer & Codecademy Engineering",
+    issuer: "Google & Codecademy",
     issueDate: "2024",
-    credentialId: "Verified Developer",
-    credentialUrl: "https://github.com/viswaas08",
+    credentialId: "Google-Codecademy-Verified",
+    credentialUrl: "https://www.linkedin.com/in/viswaa-s-69a49a1ba",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
-    skills: ["React", "JavaScript ES6+", "Flutter", "UI Architecture", "Web Performance"]
+    skills: ["Google Cloud", "Full Stack Development", "Mobile Architecture", "JavaScript ES6+", "Python"]
   },
   {
-    id: "cert-fullstack-dev",
-    title: "Full Stack Web Development & Database Architecture",
-    issuer: "FreeCodeCamp & Open Source Community",
-    issueDate: "2023",
-    credentialId: "Verified Developer",
-    credentialUrl: "https://github.com/viswaas08",
+    id: "cert-rovan-internship",
+    title: "Software Engineering Internship Credential",
+    issuer: "Rovan Software Solutions",
+    issueDate: "2025",
+    credentialId: "Rovan-SE-Intern-2025",
+    credentialUrl: "https://www.linkedin.com/in/viswaa-s-69a49a1ba",
     image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-    skills: ["MongoDB", "Express", "Node.js", "React", "REST APIs"]
+    skills: ["Software Engineering", "REST APIs", "React", "Node.js", "SQL Databases"]
   }
 ];
