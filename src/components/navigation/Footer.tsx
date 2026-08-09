@@ -1,4 +1,4 @@
-import { ArrowUp, Mail, Code2, Heart } from 'lucide-react';
+import { ArrowUp, Mail, Code2, Heart, Phone } from 'lucide-react';
 import { Github, Linkedin, Twitter } from '../common/Icons';
 import { personalData } from '../../data/personal';
 import { audioSynth } from '../../utils/audioSynthesizer';
@@ -23,15 +23,19 @@ export const Footer: React.FC = () => {
                 <Code2 className="w-5 h-5" />
               </div>
               <span className="text-xl font-extrabold text-white font-mono tracking-wider">
-                VISWAAS<span className="text-cyan-400">.DEV</span>
+                VISWAA S<span className="text-cyan-400">.DEV</span>
               </span>
             </div>
             <p className="text-slate-400 text-sm max-w-md leading-relaxed">
               {personalData.bio}
             </p>
-            <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1.5 rounded-full w-fit">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-              {personalData.availability}
+            <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-slate-300">
+              <span className="flex items-center gap-1 text-cyan-400">
+                <Mail className="w-3.5 h-3.5" /> viswaas08@gmail.com
+              </span>
+              <span className="flex items-center gap-1 text-purple-400">
+                <Phone className="w-3.5 h-3.5" /> +91 6382450849
+              </span>
             </div>
           </div>
 
@@ -44,8 +48,8 @@ export const Footer: React.FC = () => {
               <li><a href="#about" className="hover:text-cyan-300 transition-colors">About Story</a></li>
               <li><a href="#skills" className="hover:text-cyan-300 transition-colors">Skill Matrix</a></li>
               <li><a href="#projects" className="hover:text-cyan-300 transition-colors">Featured Projects</a></li>
-              <li><a href="#github" className="hover:text-cyan-300 transition-colors">GitHub API Sync</a></li>
-              <li><a href="#blog" className="hover:text-cyan-300 transition-colors">Technical Writings</a></li>
+              <li><a href="#timeline" className="hover:text-cyan-300 transition-colors">Career Timeline</a></li>
+              <li><a href="#contact" className="hover:text-cyan-300 transition-colors">Contact Telemetry</a></li>
             </ul>
           </div>
 
@@ -60,6 +64,7 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-400 transition-all"
+                title="GitHub @viswaas08"
               >
                 <Github className="w-5 h-5" />
               </a>
@@ -68,22 +73,14 @@ export const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 className="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-400 transition-all"
+                title="LinkedIn Profile"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
-              {personalData.twitterUrl && (
-                <a
-                  href={personalData.twitterUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-400 transition-all"
-                >
-                  <Twitter className="w-5 h-5" />
-                </a>
-              )}
               <a
                 href={`mailto:${personalData.email}`}
                 className="w-10 h-10 rounded-xl glass-pill flex items-center justify-center text-slate-300 hover:text-cyan-300 hover:border-cyan-400 transition-all"
+                title="Email viswaas08@gmail.com"
               >
                 <Mail className="w-5 h-5" />
               </a>
@@ -102,7 +99,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4 font-mono">
           <p>
-            © {new Date().getFullYear()} Viswaas. Engineered with Quantum Glass UI & React.
+            © {new Date().getFullYear()} Viswaa S. Engineered with Quantum Glass UI & React.
           </p>
           <p className="flex items-center gap-1">
             Built with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> for recruiters & founders.

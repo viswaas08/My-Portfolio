@@ -4,8 +4,8 @@ import { SectionHeader } from '../common/SectionHeader';
 import { GlassCard } from '../common/GlassCard';
 import { MagneticButton } from '../common/MagneticButton';
 import { personalData } from '../../data/personal';
-import { Mail, Send, CheckCircle2, MessageSquare, User, AtSign } from 'lucide-react';
-import { Github, Linkedin, Twitter } from '../common/Icons';
+import { Mail, Send, CheckCircle2, MessageSquare, User, AtSign, Phone } from 'lucide-react';
+import { Github, Linkedin } from '../common/Icons';
 import confetti from 'canvas-confetti';
 import { audioSynth } from '../../utils/audioSynthesizer';
 
@@ -29,7 +29,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
       setIsSubmitting(false);
       setSubmitted(true);
       audioSynth.playSuccess();
-      onShowToast('Message transmitted successfully! Viswaas will reply within 24 hours.');
+      onShowToast('Message transmitted successfully! Viswaa S will reply within 24 hours.');
 
       // Trigger Confetti Burst
       confetti({
@@ -69,13 +69,23 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                   <span className="font-mono text-xs md:text-sm truncate">{personalData.email}</span>
                 </a>
 
+                {personalData.phone && (
+                  <a
+                    href={`tel:${personalData.phone}`}
+                    className="flex items-center gap-3 p-3 rounded-xl glass-pill hover:border-cyan-400/40 text-slate-200 text-sm transition-all"
+                  >
+                    <Phone className="w-5 h-5 text-purple-400 shrink-0" />
+                    <span className="font-mono text-xs md:text-sm">+91 {personalData.phone}</span>
+                  </a>
+                )}
+
                 <a
                   href={personalData.githubUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-3 p-3 rounded-xl glass-pill hover:border-cyan-400/40 text-slate-200 text-sm transition-all"
                 >
-                  <Github className="w-5 h-5 text-purple-400 shrink-0" />
+                  <Github className="w-5 h-5 text-slate-400 shrink-0" />
                   <span className="font-mono text-xs md:text-sm">github.com/viswaas08</span>
                 </a>
 
@@ -86,7 +96,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                   className="flex items-center gap-3 p-3 rounded-xl glass-pill hover:border-cyan-400/40 text-slate-200 text-sm transition-all"
                 >
                   <Linkedin className="w-5 h-5 text-emerald-400 shrink-0" />
-                  <span className="font-mono text-xs md:text-sm">linkedin.com/in/viswaas08</span>
+                  <span className="font-mono text-xs md:text-sm">linkedin.com/in/viswaa-s-69a49a1ba</span>
                 </a>
               </div>
             </GlassCard>
@@ -115,14 +125,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 </div>
                 <h3 className="text-2xl font-extrabold text-white">Message Transmitted</h3>
                 <p className="text-slate-300 text-sm max-w-md mx-auto">
-                  Thank you for reaching out! Viswaas will review your message and reply promptly.
+                  Thank you for reaching out! Viswaa S will review your message and reply promptly.
                 </p>
                 <button
                   onClick={() => {
                     setSubmitted(false);
                     setFormData({ name: '', email: '', subject: '', message: '' });
                   }}
-                  className="px-4 py-2 rounded-xl glass-pill text-xs font-mono text-cyan-300 hover:border-cyan-400"
+                  className="px-4 py-2 rounded-xl glass-pill text-xs font-mono text-cyan-300 hover:border-cyan-400 cursor-pointer"
                 >
                   Send Another Message
                 </button>
