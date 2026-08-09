@@ -7,7 +7,7 @@ import { achievementsData } from '../data/achievements';
 import { blogsData } from '../data/blogs';
 import { PersonalInfo, SkillItem, ProjectItem, ExperienceItem, CertificateItem, AchievementItem, BlogPost } from '../types';
 
-const CONFIG_CACHE_KEY = 'quantum_portfolio_user_config';
+const CONFIG_CACHE_KEY = 'quantum_portfolio_user_config_v3';
 
 export interface PortfolioConfig {
   personal: PersonalInfo;
@@ -24,27 +24,37 @@ export class ConfigManager {
    * Load active config (combines local storage overrides with code defaults)
    */
   static getConfig(): PortfolioConfig {
+    const cleanExperience = experienceData.filter(
+      item => !item.organization.includes('University Institute') && !item.organization.includes('National Level')
+    );
+
     if (typeof window === 'undefined') {
       return {
         personal: personalData,
         skills: skillsData,
         projects: projectsData,
-        experience: experienceData,
+        experience: cleanExperience,
         certificates: certificatesData,
         achievements: achievementsData,
         blogs: blogsData
       };
     }
 
+    // Purge legacy cache key
+    localStorage.removeItem('quantum_portfolio_user_config');
+
     const saved = localStorage.getItem(CONFIG_CACHE_KEY);
     if (saved) {
       try {
         const parsed: PortfolioConfig = JSON.parse(saved);
+        const filteredExp = (parsed.experience || cleanExperience).filter(
+          item => !item.organization.includes('University Institute') && !item.organization.includes('National Level')
+        );
         return {
           personal: { ...personalData, ...parsed.personal },
           skills: parsed.skills || skillsData,
           projects: parsed.projects || projectsData,
-          experience: parsed.experience || experienceData,
+          experience: filteredExp.length > 0 ? filteredExp : cleanExperience,
           certificates: parsed.certificates || certificatesData,
           achievements: parsed.achievements || achievementsData,
           blogs: parsed.blogs || blogsData
@@ -58,7 +68,7 @@ export class ConfigManager {
       personal: personalData,
       skills: skillsData,
       projects: projectsData,
-      experience: experienceData,
+      experience: cleanExperience,
       certificates: certificatesData,
       achievements: achievementsData,
       blogs: blogsData
@@ -112,6 +122,7 @@ export class ConfigManager {
    */
   static resetToDefaults(): void {
     localStorage.removeItem(CONFIG_CACHE_KEY);
+    localStorage.removeItem('quantum_portfolio_user_config');
     window.dispatchEvent(new Event('portfolio-config-updated'));
   }
 }
