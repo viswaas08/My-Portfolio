@@ -1,0 +1,207 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { 
+  Menu, 
+  X, 
+  Sun, 
+  Moon, 
+  Sparkles, 
+  ChevronRight,
+  PhoneCall
+} from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { siteConfig } from '../config/siteConfig';
+import { ClientInquiryModal } from './ClientInquiryModal';
+
+export const Navbar: React.FC = () => {
+  const { theme, toggleTheme } = useTheme();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  const navLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'Services', path: '/services' },
+    { label: 'Pricing', path: '/pricing' },
+    { label: 'Demos', path: '/demos', highlight: true },
+    { label: 'Process', path: '/#process', isHash: true },
+    { label: 'Projects', path: '/projects' },
+    { label: 'FAQ', path: '/#faq', isHash: true },
+    { label: 'Contact', path: '/contact' },
+  ];
+
+  const handleNavClick = (e: React.MouseEvent, item: typeof navLinks[0]) => {
+    if (item.isHash) {
+      e.preventDefault();
+      const hash = item.path.replace('/', '');
+      if (location.pathname !== '/') {
+        navigate(`/${hash}`);
+      } else {
+        const el = document.querySelector(hash);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      setMobileMenuOpen(false);
+    }
+  };
+
+  return (
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/85 dark:bg-slate-900/85 backdrop-blur-md shadow-sm border-b border-slate-200/80 dark:border-slate-800/80 py-3'
+            : 'bg-transparent py-4'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link 
+              to="/" 
+              className="flex items-center gap-2.5 group"
+            >
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-black text-lg tracking-wider shadow-md shadow-sky-500/20 group-hover:scale-105 transition">
+                V
+              </div>
+              <div className="flex flex-col">
+                <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white leading-none">
+                  {siteConfig.brand.name}
+                </span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-sky-600 dark:text-sky-400">
+                  Websites for Local Business
+                </span>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium transition ${
+                    location.pathname === item.path
+                      ? 'text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/40'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                  } ${
+                    item.highlight
+                      ? 'font-semibold text-sky-600 dark:text-sky-400'
+                      : ''
+                  }`}
+                >
+                  {item.label}
+                  {item.highlight && (
+                    <span className="ml-1.5 px-1.5 py-0.5 text-[10px] rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 font-bold border border-sky-500/20">
+                      8 Demos
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Actions: Theme Toggle + CTA */}
+            <div className="flex items-center gap-3">
+              {/* Theme toggle */}
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle dark/light mode"
+                className="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                {theme === 'dark' ? (
+                  <Sun className="w-4 h-4 text-amber-400" />
+                ) : (
+                  <Moon className="w-4 h-4 text-slate-700" />
+                )}
+              </button>
+
+              {/* Consultation / CTA Button */}
+              <button
+                onClick={() => setModalOpen(true)}
+                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white text-sm font-semibold shadow-md shadow-sky-600/20 transition cursor-pointer"
+              >
+                <Sparkles className="w-4 h-4" />
+                Get My Website
+              </button>
+
+              {/* Mobile menu trigger */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+                className="lg:hidden p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile menu overlay */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden fixed inset-x-0 top-[65px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xl px-4 py-6 space-y-3 animate-fadeIn">
+            <div className="grid grid-cols-2 gap-2">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.path}
+                  onClick={(e) => handleNavClick(e, item)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition ${
+                    location.pathname === item.path
+                      ? 'bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400'
+                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  <ChevronRight className="w-4 h-4 opacity-50" />
+                </Link>
+              ))}
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2.5">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setModalOpen(true);
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold shadow-md shadow-sky-600/20 transition cursor-pointer text-sm"
+              >
+                <Sparkles className="w-4 h-4" />
+                Get My Website
+              </button>
+
+              <a
+                href={`tel:${siteConfig.contact.whatsappNumber}`}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium"
+              >
+                <PhoneCall className="w-4 h-4 text-emerald-500" />
+                Call {siteConfig.contact.phoneDisplay}
+              </a>
+            </div>
+          </div>
+        )}
+      </header>
+
+      <ClientInquiryModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
+  );
+};

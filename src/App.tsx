@@ -1,157 +1,74 @@
-import React, { useState, useEffect } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useLenis } from './hooks/useLenis';
-import { ParticleBackground } from './components/3d/ParticleBackground';
-import { CustomCursor } from './components/common/CustomCursor';
-import { ScrollProgress } from './components/common/ScrollProgress';
-import { Navbar } from './components/navigation/Navbar';
-import { Footer } from './components/navigation/Footer';
-import { HeroSection } from './components/sections/HeroSection';
-import { AboutSection } from './components/sections/AboutSection';
-import { LinkedinCard } from './components/linkedin/LinkedinCard';
-import { SkillsSection } from './components/sections/SkillsSection';
-import { ProjectsSection } from './components/sections/ProjectsSection';
-import { ExperienceTimelineSection } from './components/sections/ExperienceTimelineSection';
-import { CertificatesSection } from './components/sections/CertificatesSection';
-import { AchievementsSection } from './components/sections/AchievementsSection';
-import { GithubSection } from './components/sections/GithubSection';
-import { BlogSection } from './components/sections/BlogSection';
-import { ContactSection } from './components/sections/ContactSection';
-import { CommandPalette } from './components/common/CommandPalette';
-import { AiAssistantWidget } from './components/ai/AiAssistantWidget';
-import { ToastNotification } from './components/common/ToastNotification';
-import { LightboxModal } from './components/common/LightboxModal';
-import { ResumeModal } from './components/common/ResumeModal';
-import { ProjectModal } from './components/common/ProjectModal';
-import { RecruiterPanel } from './components/recruiter/RecruiterPanel';
-import { AdminEditorModal } from './components/admin/AdminEditorModal';
-import { LoadingScreen } from './components/common/LoadingScreen';
-import { ProjectItem } from './types';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { ScrollToTop } from './components/ScrollToTop';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-      refetchOnWindowFocus: false
-    }
-  }
-});
+// Agency Pages
+import { Home } from './pages/Home';
+import { ServicesPage } from './pages/ServicesPage';
+import { PricingPage } from './pages/PricingPage';
+import { DemosIndex } from './pages/DemosIndex';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { ContactPage } from './pages/ContactPage';
+import { NotFound } from './pages/NotFound';
 
-const PortfolioContent: React.FC = () => {
-  useLenis();
+// Demo Pages
+import { RestaurantDemo } from './pages/demos/Restaurant';
+import { CafeDemo } from './pages/demos/Cafe';
+import { BakeryDemo } from './pages/demos/Bakery';
+import { ShopDemo } from './pages/demos/Shop';
+import { SalonDemo } from './pages/demos/Salon';
+import { GymDemo } from './pages/demos/Gym';
+import { TuitionDemo } from './pages/demos/Tuition';
+import { ClinicDemo } from './pages/demos/Clinic';
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
-  const [aiWidgetOpen, setAiWidgetOpen] = useState(false);
-  const [resumeModalOpen, setResumeModalOpen] = useState(false);
-  const [recruiterPanelOpen, setRecruiterPanelOpen] = useState(false);
-  const [adminEditorOpen, setAdminEditorOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [lightboxImage, setLightboxImage] = useState<{ url: string; title: string } | null>(null);
-  const [selectedProjectModal, setSelectedProjectModal] = useState<ProjectItem | null>(null);
-
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4000);
-  };
-
-  const handleSelectProject = (project: ProjectItem) => {
-    setSelectedProjectModal(project);
-  };
+function AppContent() {
+  const location = useLocation();
+  const isDemoPage = location.pathname.startsWith('/demos/');
 
   return (
-    <div className="relative min-h-screen bg-[#07080c] text-slate-100 overflow-x-hidden">
-      {/* Page Startup Splash Loader */}
-      {isLoading && <LoadingScreen onComplete={() => setIsLoading(false)} />}
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+      <ScrollToTop />
+      {!isDemoPage && <Navbar />}
 
-      {/* Global Interactive Layers */}
-      <ParticleBackground />
-      <CustomCursor />
-      <ScrollProgress />
+      <div className="flex-1">
+        <Routes>
+          {/* Main Agency Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/demos" element={<DemosIndex />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/contact" element={<ContactPage />} />
 
-      {/* Navigation */}
-      <Navbar
-        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
-        onOpenAiWidget={() => setAiWidgetOpen(true)}
-        onOpenRecruiterPanel={() => setRecruiterPanelOpen(true)}
-        onOpenAdminEditor={() => setAdminEditorOpen(true)}
-      />
+          {/* 8 Working Business Demos */}
+          <Route path="/demos/restaurant" element={<RestaurantDemo />} />
+          <Route path="/demos/cafe" element={<CafeDemo />} />
+          <Route path="/demos/bakery" element={<BakeryDemo />} />
+          <Route path="/demos/shop" element={<ShopDemo />} />
+          <Route path="/demos/salon" element={<SalonDemo />} />
+          <Route path="/demos/gym" element={<GymDemo />} />
+          <Route path="/demos/tuition" element={<TuitionDemo />} />
+          <Route path="/demos/clinic" element={<ClinicDemo />} />
 
-      {/* Main Page Content Sections */}
-      <main className="relative z-10 space-y-12">
-        <HeroSection onOpenResumeModal={() => setResumeModalOpen(true)} />
-        <AboutSection />
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <LinkedinCard />
-        </div>
+          {/* 404 Route */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
 
-        <SkillsSection />
-        <ProjectsSection onSelectProject={handleSelectProject} />
-        <GithubSection onShowToast={showToast} />
-        <ExperienceTimelineSection />
-        <CertificatesSection onOpenLightbox={(url, title) => setLightboxImage({ url, title })} />
-        <AchievementsSection />
-        <BlogSection />
-        <ContactSection onShowToast={showToast} />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Interactive Global Widgets & Modals */}
-      <CommandPalette
-        isOpen={commandPaletteOpen}
-        onClose={() => setCommandPaletteOpen(false)}
-      />
-
-      <AiAssistantWidget
-        isOpen={aiWidgetOpen}
-        onClose={() => setAiWidgetOpen(false)}
-      />
-
-      <ResumeModal
-        isOpen={resumeModalOpen}
-        onClose={() => setResumeModalOpen(false)}
-        onShowToast={showToast}
-      />
-
-      <RecruiterPanel
-        isOpen={recruiterPanelOpen}
-        onClose={() => setRecruiterPanelOpen(false)}
-        onShowToast={showToast}
-      />
-
-      <AdminEditorModal
-        isOpen={adminEditorOpen}
-        onClose={() => setAdminEditorOpen(false)}
-        onShowToast={showToast}
-      />
-
-      <ProjectModal
-        project={selectedProjectModal}
-        onClose={() => setSelectedProjectModal(null)}
-      />
-
-      <LightboxModal
-        image={lightboxImage}
-        onClose={() => setLightboxImage(null)}
-      />
-
-      <ToastNotification
-        message={toastMessage}
-        onClose={() => setToastMessage(null)}
-      />
+      {!isDemoPage && <Footer />}
     </div>
   );
-};
+}
 
-export default function App() {
+export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <PortfolioContent />
-    </QueryClientProvider>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
+
+export default App;

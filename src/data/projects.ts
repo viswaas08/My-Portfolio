@@ -1,82 +1,76 @@
-import { ProjectItem } from '../types';
+export interface TechnicalProject {
+  id: string;
+  title: string;
+  category: string;
+  problem: string;
+  solution: string;
+  technology: string[];
+  features: string[];
+  liveDemoUrl: string;
+  githubUrl: string;
+  image: string;
+  notice?: string;
+}
 
-export const projectsData: ProjectItem[] = [
+export const technicalProjects: TechnicalProject[] = [
   {
-    id: "flutter-expense-tracker",
-    title: "Flutter Expense Tracker & Financial Vault",
-    tagline: "Ultra-fast offline-first expense manager powered by Hive database and Flutter Clean Architecture.",
-    description: "A production-grade mobile app for intelligent budgeting, recurring subscription tracking, real-time analytics, local backup export/import, and instant notifications.",
-    problemSolved: "Traditional financial apps are bloated, slow, and send sensitive bank data to cloud servers. Built an offline-first high-speed vault that processes transactions in <10ms.",
-    solution: "Architected a local binary Hive key-value store with reactive BLoC state streams and automated CSV/JSON encryption backups.",
-    architecture: "Clean Architecture + BLoC State Management + Hive Local Storage + Automated Unit/Widget Testing Suite",
+    id: "erp-student-management",
+    title: "ERP-Based Student Management System",
+    category: "Full-Stack Web Application",
+    problem: "Colleges and educational institutions struggle with disjointed spreadsheets, manual attendance logging, and paper-based internal marks distribution, leading to errors and delays.",
+    solution: "Architected a comprehensive role-based ERP web platform providing synchronized portals for administrators, professors, and students with real-time academic records.",
+    technology: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "JWT Auth"],
     features: [
-      "Offline-first zero-latency Hive database storage",
-      "Interactive pie charts and spending trend heatmaps",
-      "Automated recurring subscription tracker",
-      "CSV & JSON encryption data export/import",
-      "Custom Quantum Glass dark theme UI with smooth page transitions"
+      "Role-based authentication & permissions (Admin, Faculty, Student)",
+      "Automated attendance calculator with low-attendance alerts",
+      "Internal assessments and GPA examination result publishing",
+      "Digital student profiles with document storage and verification",
+      "Analytics dashboard showing class trends and semester performance"
     ],
-    metrics: [
-      "<10ms transaction write latency",
-      "100% offline privacy guarantee",
-      "99.8% test coverage across core controllers"
-    ],
-    challengesFaced: [
-      "Handling complex reactive stream synchronization across nested BLoC controllers during batch CSV imports.",
-      "Optimizing Hive binary serialization for high-frequency recurring expense generation without freezing UI thread."
-    ],
-    lessonsLearned: [
-      "Strict separation of Data and Domain layers prevents state leakage across cross-platform Flutter modules.",
-      "Isolating heavy serialization workloads into Dart Isolates maintains fluid 60fps rendering."
-    ],
-    timeline: "3 Months (2026)",
-    screenshots: [
-      "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80"
-    ],
-    category: "Flutter",
-    techStack: ["Flutter", "Dart", "Hive", "BLoC", "Clean Architecture", "Local Notifications"],
-    githubUrl: "https://github.com/viswaas08/Flutter-App-Expense-Tracker",
-    liveDemoUrl: "https://github.com/viswaas08/Flutter-App-Expense-Tracker",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=80",
-    featured: true
+    liveDemoUrl: "https://github.com/viswaas08/Student-Management-System",
+    githubUrl: "https://github.com/viswaas08/Student-Management-System",
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80",
+    notice: "Full-Stack Academic Engineering Project"
   },
   {
-    id: "quantum-ai-portfolio",
-    title: "Quantum Glass AI Developer Portfolio",
-    tagline: "Apple-Linear inspired futuristic portfolio with dynamic GitHub REST API integration & AI recruiter assistant.",
-    description: "An ultra-premium web app with frosted glass depth, 3D R3F visualizers, native Web Audio API chimes, Lenis smooth scrolling, Command Palette, and live README previews.",
-    problemSolved: "Replaces traditional static resume websites with an interactive high-velocity engineering platform that showcases live GitHub telemetry.",
-    solution: "Integrated a client-side localStorage 6-hour TTL cache layer with TanStack Query and WebGL canvas particle fields.",
-    architecture: "React 18 + Vite + TypeScript + TailwindCSS + Framer Motion + Three.js / R3F + GitHub REST API",
+    id: "menu-planner",
+    title: "Smart Menu Planner & Kitchen Inventory",
+    category: "Web Application / Productivity Tool",
+    problem: "Food service managers and home chefs lose hours every week manually calculating ingredient procurement, balancing dietary macros, and preventing perishable food waste.",
+    solution: "Built an intelligent digital menu planner that dynamically calculates weekly grocery lists, monitors portion recipes, and automatically categorizes ingredients by fresh vs pantry goods.",
+    technology: ["React", "TypeScript", "Tailwind CSS", "Local Storage API", "Lucide Icons"],
     features: [
-      "Dynamic GitHub API live sync for viswaas08 with 6-hour caching",
-      "Interactive AI Recruiter Assistant widget",
-      "Global Command Palette (Cmd + K) navigation",
-      "Synthesized Web Audio ambient chimes",
-      "52-Week GitHub contribution heatmap and language distribution breakdown"
+      "Drag-and-drop weekly meal scheduler across breakfast, lunch, dinner",
+      "Dynamic automatic grocery list generator with quantity aggregation",
+      "Nutritional breakdown and dietary preference filtering (Veg, Vegan, High-Protein)",
+      "Recipe card builder with prep time, step instructions, and serving scaling",
+      "Offline-first local persistence so plans never vanish"
     ],
-    metrics: [
-      "100/100 Lighthouse Performance score target",
-      "<50ms interactive state transition response time",
-      "6-hour cache protection against API rate limits"
+    liveDemoUrl: "https://github.com/viswaas08/Menu-Planner",
+    githubUrl: "https://github.com/viswaas08/Menu-Planner",
+    image: "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80",
+    notice: "Interactive Kitchen Utility Project"
+  },
+  {
+    id: "civicsync",
+    title: "CivicSync — Community Issue Reporting Platform",
+    category: "Civic Tech / Community Portal",
+    problem: "Citizens face bureaucratic friction when reporting civic infrastructure issues (potholes, streetlights, waste overflow), while municipal teams lack geo-tagged dispatch data.",
+    solution: "Engineered a transparent community grievance dashboard where citizens can capture, geo-tag, and track public utility reports with status notifications.",
+    technology: ["React", "Tailwind CSS", "Leaflet Maps API", "REST API", "Framer Motion"],
+    features: [
+      "Geo-tagged civic issue submission with photo upload preview",
+      "Interactive municipal status tracker (Reported → In Review → Resolved)",
+      "Public community feed allowing upvoting to highlight critical repairs",
+      "Municipal authority admin view with priority sorting and department dispatch",
+      "Clean mobile-first UI optimized for rapid field reporting"
     ],
-    challengesFaced: [
-      "Preventing GitHub API 403 rate-limit errors during high traffic volume without forcing personal access tokens.",
-      "Achieving smooth 60fps WebGL particle rendering alongside Lenis smooth scrolling on lower-end mobile devices."
-    ],
-    lessonsLearned: [
-      "Client-side caching with graceful fallback datasets guarantees 100% uptime regardless of external API outages.",
-      "Utilizing Web Audio API oscillators eliminates external MP3 asset download latencies."
-    ],
-    timeline: "1 Month (2026)",
-    screenshots: [
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80"
-    ],
-    category: "React",
-    techStack: ["React", "TypeScript", "Vite", "TailwindCSS", "Framer Motion", "Three.js", "GitHub API"],
-    githubUrl: "https://github.com/viswaas08/PORTFOLIO-WEBSITE",
-    liveDemoUrl: "https://github.com/viswaas08/PORTFOLIO-WEBSITE",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
-    featured: true
+    liveDemoUrl: "https://github.com/viswaas08/CivicSync",
+    githubUrl: "https://github.com/viswaas08/CivicSync",
+    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80",
+    notice: "Civic Tech Prototype / Previous Work"
   }
 ];
+
+export const projectsData = technicalProjects;
+
