@@ -1,5 +1,6 @@
 import React from 'react';
 import { PricingSection } from '../components/PricingSection';
+import { MaintenanceSection } from '../components/MaintenanceSection';
 import { FAQSection } from '../components/FAQSection';
 import { ContactSection } from '../components/ContactSection';
 import { useLanguage } from '../context/LanguageContext';
@@ -27,6 +28,7 @@ export const PricingPage: React.FC = () => {
       </section>
 
       <PricingSection />
+      <MaintenanceSection />
       <FAQSection />
       <ContactSection />
     </div>

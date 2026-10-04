@@ -1,6 +1,6 @@
-# VISWAA WEB — Freelance Web Development Studio
+# VISWAA WEB — Production Freelance Web Development Agency Platform
 
-> **Modern websites that help local businesses get discovered, build trust and get more customers.**
+> **A complete, scalable commercial platform to sell, demonstrate, onboard, deploy, and maintain websites for local businesses.**
 
 🔗 **Live Website**: [https://viswaas-portfolio.netlify.app](https://viswaas-portfolio.netlify.app)
 
@@ -8,14 +8,26 @@
 [![React 19](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vitejs.dev)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org)
 
-A production-grade freelance agency website designed to convert local businesses (restaurants, cafes, bakeries, retail shops, salons, gyms, tuition centres, and clinics) into paying web development clients.
+An end-to-end commercial system that functions as:
+1. **Professional Freelance Portfolio & Agency Showcase**
+2. **Transparent Service & Pricing Website** (Starter ₹4,999, Business ₹9,999 [Most Popular], Pro Web App ₹19,999+, Website Care ₹1,499/mo, Advanced Care ₹2,999/mo)
+3. **Interactive 8-Industry Demo Showroom** (`/demos/*`) with floating conversion triggers
+4. **7-Step Client Onboarding System** (`/onboarding`) with Domain Ownership Charter & 50/50 payment calculation
+5. **Full Executive Agency Dashboard** (`/admin`) tracking dynamic MRR, ARR, and Net Margin (MRR - Infrastructure Cost)
+6. **Scalable Client Registry** (`/admin/clients`) managing 10 to 50+ clients with status timelines
+7. **Hosting & Deployment Registry** (`/admin/websites`) tracking Vercel deployments, custom domains, and per-client cloud costs
+8. **Lead Pipeline CRM** (`/admin/leads`) with funnel metrics and WhatsApp follow-up
+9. **SEO & Health Auditor** (`/admin/seo`) with Google SERP preview and checklist
+10. **Modular Node.js/Express Backend** (`backend/`) and Operations SOPs (`docs/`)
 
 ---
 
-## 🚀 Key Highlights
+## 🚀 Key Highlights & Platform Architecture
 
-- **8 Authentic Business Demos**:
+### 1. Public Agency Showcase & Demos
+- **8 Working Industry Demos**:
   - 🍽️ `/demos/restaurant` — **Spice Route** (Categorized South Indian menu, table reservation, WhatsApp takeaway)
   - ☕ `/demos/cafe` — **Brew & Bean** (Specialty coffee roastery, tasting notes, cozy aesthetic)
   - 🥐 `/demos/bakery` — **Sweet Crumbs Bakery** (Pure butter artisan bakes, custom birthday cake builder)
@@ -24,24 +36,62 @@ A production-grade freelance agency website designed to convert local businesses
   - 🏋️‍♂️ `/demos/gym` — **Forge Fitness** (High-voltage strength club, membership tiers, free 1-day pass)
   - 🎓 `/demos/tuition` — **BrightPath Academy** (Class 8–12 CBSE/State board batches, faculty & results board)
   - 🩺 `/demos/clinic` — **CarePoint Clinic** (Family health, specialist doctor roster, OPD slot booking)
-- **High-Conversion Strategy**:
-  - Floating "Want a website like this? -> Get This Website" conversion banner on every demo.
+- **High-Conversion Triggers**:
+  - Floating "Want a website like this? -> Get This Website" banner on every demo.
   - Direct WhatsApp links with automated pre-filled messages.
   - Lead capture consultation modal with package pre-selection.
-- **Engineered for Speed, Accessibility & Localization**:
-  - **Website-Wide Tamil Support (தமிழ்)**: 1-click toggle between English and Tamil across all sections, navigation, pricing, FAQs, lead modal, and floating conversion CTAs, persisted in `localStorage`.
-  - **Full Light & Dark Theme Support**: Smooth transitions, customized color palettes, glassmorphism, and persistent theme states.
-  - Built with React 19, Vite, Tailwind CSS, Lucide icons, and modern design principles.
-  - Ultra-fast bundle with sub-second production builds.
+
+### 2. Client Onboarding System (`/onboarding`)
+A 7-step guided onboarding workflow:
+1. **Client Contact Info**: Name, designation, verified WhatsApp and email.
+2. **Business Profile**: Category, physical location, opening hours, story.
+3. **Package & Care Plan Selection**: Auto-calculates 50% advance and monthly care amounts.
+4. **Content Requirement Checklist**: Logo, menu, photos, social profiles.
+5. **Asset Ownership Charter**: Strict legal clarity separating **Client-Owned Assets** (Domain, Google Business Profile, Email, Content) from **Freelancer-Managed Code & Hosting**.
+6. **Payment Agreement**: 50% advance before development, 50% before final DNS handover.
+7. **Automated Submission**: Immediately updates registry and generates a 1-click WhatsApp handoff receipt.
+
+### 3. Executive Agency Admin Suite (`/admin`)
+- **Passcode Protected**: Access via `/admin/login` (Default passcode: `admin2026`).
+- **Dynamic Financial Metrics**:
+  - Total Clients, Active Live Websites, Maintenance Subscriptions.
+  - Gross MRR (Monthly Recurring Revenue) & ARR.
+  - Per-client Variable Infrastructure Cost Recording.
+  - **Net Recurring Margin** ($\text{MRR} - \text{Total Infrastructure Cost}$).
+  - Pending 50% Balance Receivables.
+  - Domain Expiry Alert Countdown (30, 14, 7, and 3-day notifications).
+- **Client & Project Registry (`/admin/clients`)**:
+  - Search, filter by business type, and filter by project pipeline status.
+  - Visual status timeline: `Lead → Contacted → Discussion → Quoted → Advance Paid → Development → Client Review → Revision → Deployed → Maintenance → Completed`.
+  - Add client, edit profile, and inspect complete client dossier.
+- **Hosting & Deployment Management (`/admin/websites`)**:
+  - Track Vercel project name, GitHub repo, deployment status, and SSL certificates.
+  - Record per-client monthly infrastructure expenses.
+- **Lead Pipeline CRM (`/admin/leads`)**:
+  - Funnel metrics, conversion rate, and expected pipeline value.
+  - Quick WhatsApp follow-up button and status updates.
+- **SEO & Website Health Management (`/admin/seo`)**:
+  - Edit title & meta descriptions with live Google Search snippet preview.
+  - Interactive technical verification checklist (Mobile responsive, Sitemap, Robots.txt, Search Console, Google Business Profile, NAP consistency).
+
+---
+
+## 📚 Standard Operating Procedures (SOPs)
+
+Detailed operations manuals are located in `docs/`:
+- [`deployment.md`](./docs/deployment.md) — Local run, Vercel/Netlify deployment, custom domains, DNS, and preview vs production branches.
+- [`client-onboarding.md`](./docs/client-onboarding.md) — 7-step workflow, domain ownership charter, and 50/50 payment model.
+- [`pricing.md`](./docs/pricing.md) — Commercial tiers, inclusions, limits, and ethics policies (no false ranking promises).
+- [`maintenance.md`](./docs/maintenance.md) — Website Care vs Advanced Care, infrastructure cost accounting, and surge protection.
+- [`business-operations.md`](./docs/business-operations.md) — Scaling to 50+ clients, domain renewals, site migrations, and Google Search Console / GBP guides.
 
 ---
 
 ## 🛠️ Tech Stack & Scripts
 
-- **Framework**: React 19 + TypeScript + Vite
-- **Styling**: Tailwind CSS + Modern CSS Variables
-- **Routing**: React Router DOM (v7)
-- **Icons**: Lucide React + Custom Brand SVGs
+- **Frontend**: React 19 + TypeScript + Vite + Tailwind CSS + Lucide Icons + React Router
+- **Backend API**: Node.js + Express + MongoDB (Mongoose) + JWT Auth + Helmet + Rate Limiter
+- **Storage**: Persistent LocalStorage with seed data + optional MongoDB REST API
 
 ### Development & Build Commands
 

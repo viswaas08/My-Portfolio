@@ -54,9 +54,9 @@ export const Navbar: React.FC = () => {
     { label: t.nav.services, path: '/services' },
     { label: t.nav.pricing, path: '/pricing' },
     { label: t.nav.demos, path: '/demos', highlight: true },
+    { label: lang === 'ta' ? 'திட்டம் பதிவு' : 'Start Project', path: '/onboarding' },
     { label: t.nav.process, path: '/#process', isHash: true },
     { label: t.nav.projects, path: '/projects' },
-    { label: t.nav.faq, path: '/#faq', isHash: true },
     { label: t.nav.contact, path: '/contact' },
   ];
 

@@ -107,6 +107,17 @@ export const Footer: React.FC = () => {
                   {t.nav.contact}
                 </Link>
               </li>
+              <li className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                <Link to="/onboarding" className="text-sky-600 dark:text-sky-400 font-medium hover:underline flex items-center gap-1">
+                  <span>{lang === 'ta' ? 'திட்டம் பதிவு (Onboarding)' : 'Client Onboarding'}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin" className="text-slate-500 dark:text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition text-xs flex items-center gap-1">
+                  <span>{lang === 'ta' ? 'நிர்வாக மையம்' : 'Agency Portal'}</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
