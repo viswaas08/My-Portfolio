@@ -53,7 +53,7 @@ export const PricingSection: React.FC = () => {
               return (
                 <div
                   key={pkg.id}
-                  className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
+                  className={`relative rounded-3xl p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
                     isPopular
                       ? 'bg-white dark:bg-slate-800 border-2 border-sky-500 dark:border-sky-400 shadow-xl shadow-sky-500/10 lg:-translate-y-2'
                       : 'bg-white/90 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 shadow-md hover:shadow-lg'
@@ -73,7 +73,7 @@ export const PricingSection: React.FC = () => {
                       <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                         {pkg.name}
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 min-h-[32px]">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 sm:min-h-[32px]">
                         {pkg.tagline}
                       </p>
                       <div className="mt-4 flex items-baseline gap-1">

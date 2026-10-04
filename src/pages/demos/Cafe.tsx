@@ -294,12 +294,12 @@ export const CafeDemo: React.FC = () => {
             <h2 className="text-3xl sm:text-4xl font-black text-[#f7f2ea]">
               The Brew & Bean Menu
             </h2>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+            <div className="flex items-center sm:justify-center gap-2 pt-2 overflow-x-auto no-scrollbar pb-2 px-1 sm:flex-wrap">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveTab(cat)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition cursor-pointer ${
                     activeTab === cat
                       ? 'bg-[#c58f5e] text-[#14100c]'
                       : 'bg-[#241c15] text-[#cfbeae] hover:bg-[#2e231b]'

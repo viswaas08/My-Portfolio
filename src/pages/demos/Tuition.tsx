@@ -282,7 +282,7 @@ export const TuitionDemo: React.FC = () => {
                       value={enquiryForm.parentName}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, parentName: e.target.value })}
                       placeholder="e.g. S. Ramanathan"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:border-blue-400"
                     />
                   </div>
                   <div>
@@ -293,7 +293,7 @@ export const TuitionDemo: React.FC = () => {
                       value={enquiryForm.studentName}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, studentName: e.target.value })}
                       placeholder="e.g. Rahul"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:border-blue-400"
                     />
                   </div>
                 </div>
@@ -307,7 +307,7 @@ export const TuitionDemo: React.FC = () => {
                       value={enquiryForm.phone}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
                       placeholder="+91 98765 43210"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:border-blue-400"
                     />
                   </div>
                   <div>
@@ -315,7 +315,7 @@ export const TuitionDemo: React.FC = () => {
                     <select
                       value={enquiryForm.grade}
                       onChange={(e) => setEnquiryForm({ ...enquiryForm, grade: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-xs text-white focus:outline-none focus:border-blue-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-base sm:text-xs text-white focus:outline-none focus:border-blue-400"
                     >
                       <option value="Class 8">Class 8</option>
                       <option value="Class 9">Class 9</option>

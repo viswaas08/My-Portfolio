@@ -37,7 +37,7 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Headline */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.12]">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.14] break-words">
                 {t.hero.headlinePart1}{' '}
                 <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 dark:from-sky-400 dark:via-blue-400 dark:to-indigo-300 bg-clip-text text-transparent">
                   {t.hero.headlinePart2}
@@ -86,7 +86,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Right Visual: Realistic Restaurant Website Preview on Desktop & Mobile */}
-            <div className="lg:col-span-5 relative">
+            <div className="lg:col-span-5 relative max-w-md sm:max-w-xl mx-auto lg:max-w-none w-full">
               {/* Desktop Mockup Frame */}
               <div className="relative rounded-2xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden">
                 {/* Browser top chrome */}
@@ -185,7 +185,7 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Mobile Phone Mockup (Layered Overlapping) */}
-              <div className="absolute -bottom-6 -right-2 sm:-bottom-8 sm:-right-4 w-44 sm:w-52 rounded-3xl bg-slate-950 p-2 border-2 border-slate-700 shadow-2xl hidden xs:block">
+              <div className="absolute -bottom-6 right-0 sm:-bottom-8 sm:-right-4 w-44 sm:w-52 rounded-3xl bg-slate-950 p-2 border-2 border-slate-700 shadow-2xl hidden sm:block">
                 {/* Screen frame */}
                 <div className="rounded-2xl bg-stone-950 overflow-hidden text-white p-3 space-y-2.5 border border-slate-800">
                   <div className="flex items-center justify-between text-[9px] text-slate-400 border-b border-white/10 pb-1.5">

@@ -13,7 +13,7 @@ export const ProjectsPage: React.FC = () => {
           <span className="text-xs uppercase font-bold tracking-widest text-indigo-600 dark:text-indigo-400">
             {lang === 'ta' ? 'முழுமையான வலை அமைப்புகள்' : 'Full-Stack Systems'}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-slate-900 dark:text-white break-words">
             {lang === 'ta' ? 'தொழில்நுட்ப மற்றும் பொறியியல் திட்டங்கள்' : 'Engineering & Technical Work'}
           </h1>
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">

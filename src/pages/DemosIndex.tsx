@@ -13,7 +13,7 @@ export const DemosIndex: React.FC = () => {
           <span className="text-xs uppercase font-bold tracking-widest text-sky-600 dark:text-sky-400">
             {lang === 'ta' ? 'நேரலை மாதிரி இணையதளங்கள்' : 'Live Working Demos'}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-slate-900 dark:text-white break-words">
             {lang === 'ta' ? '8 மாதிரி வணிக இணையதளங்களை பாருங்கள்' : 'Explore 8 Realistic Local Business Websites'}
           </h1>
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">

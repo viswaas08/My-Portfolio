@@ -30,7 +30,7 @@ function AppContent() {
   const isDemoPage = location.pathname.startsWith('/demos/');
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors overflow-x-hidden w-full relative">
       <ScrollToTop />
       {!isDemoPage && <Navbar />}
 

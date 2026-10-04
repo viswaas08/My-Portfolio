@@ -15,7 +15,7 @@ export const PricingPage: React.FC = () => {
           <span className="text-xs uppercase font-bold tracking-widest text-emerald-600 dark:text-emerald-400">
             {lang === 'ta' ? 'வெளிப்படையான மற்றும் நேர்மையான கட்டணங்கள்' : 'Upfront & Honest Pricing'}
           </span>
-          <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white">
+          <h1 className="text-2xl xs:text-3xl sm:text-5xl font-black text-slate-900 dark:text-white break-words">
             {lang === 'ta' ? 'ஒவ்வொரு வணிகத்திற்கும் எளிய திட்டங்கள்' : 'Simple Packages for Every Business Stage'}
           </h1>
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">

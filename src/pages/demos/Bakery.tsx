@@ -201,7 +201,7 @@ export const BakeryDemo: React.FC = () => {
                 <select
                   value={cakeForm.flavor}
                   onChange={(e) => setCakeForm({ ...cakeForm, flavor: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-base sm:text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
                 >
                   <option value="Belgian Truffle Chocolate">Belgian Truffle Chocolate (Most Popular)</option>
                   <option value="Philadelphia Red Velvet">Philadelphia Red Velvet</option>
@@ -219,7 +219,7 @@ export const BakeryDemo: React.FC = () => {
                 <select
                   value={cakeForm.weight}
                   onChange={(e) => setCakeForm({ ...cakeForm, weight: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-base sm:text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
                 >
                   <option value="0.5 Kg (4–5 people)">0.5 Kg (4–5 people)</option>
                   <option value="1.0 Kg (8–10 people)">1.0 Kg (8–10 people)</option>
@@ -239,7 +239,7 @@ export const BakeryDemo: React.FC = () => {
                   value={cakeForm.occasion}
                   onChange={(e) => setCakeForm({ ...cakeForm, occasion: e.target.value })}
                   placeholder="e.g. 1st Birthday, 25th Anniversary"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-base sm:text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
                 />
               </div>
 
@@ -252,7 +252,7 @@ export const BakeryDemo: React.FC = () => {
                   value={cakeForm.nameMsg}
                   onChange={(e) => setCakeForm({ ...cakeForm, nameMsg: e.target.value })}
                   placeholder="e.g. Happy Birthday Ananya!"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#ebdcd5] bg-white text-base sm:text-xs font-medium text-[#2c2420] focus:outline-none focus:border-[#e17b88]"
                 />
               </div>
             </div>

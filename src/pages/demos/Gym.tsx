@@ -291,7 +291,7 @@ export const GymDemo: React.FC = () => {
                       value={trialForm.name}
                       onChange={(e) => setTrialForm({ ...trialForm, name: e.target.value })}
                       placeholder="Karthik Raj"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-xs text-white focus:outline-none focus:border-[#84cc16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-base sm:text-xs text-white focus:outline-none focus:border-[#84cc16]"
                     />
                   </div>
                   <div>
@@ -302,7 +302,7 @@ export const GymDemo: React.FC = () => {
                       value={trialForm.phone}
                       onChange={(e) => setTrialForm({ ...trialForm, phone: e.target.value })}
                       placeholder="+91 98765 43210"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-xs text-white focus:outline-none focus:border-[#84cc16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-base sm:text-xs text-white focus:outline-none focus:border-[#84cc16]"
                     />
                   </div>
                 </div>
@@ -313,7 +313,7 @@ export const GymDemo: React.FC = () => {
                     <select
                       value={trialForm.goal}
                       onChange={(e) => setTrialForm({ ...trialForm, goal: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-xs text-white focus:outline-none focus:border-[#84cc16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-base sm:text-xs text-white focus:outline-none focus:border-[#84cc16]"
                     >
                       <option value="Fat Loss & Conditioning">Fat Loss & Conditioning</option>
                       <option value="Muscle Building / Hypertrophy">Muscle Building / Hypertrophy</option>
@@ -326,7 +326,7 @@ export const GymDemo: React.FC = () => {
                     <select
                       value={trialForm.preferredSlot}
                       onChange={(e) => setTrialForm({ ...trialForm, preferredSlot: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-xs text-white focus:outline-none focus:border-[#84cc16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#0d0f11] border border-[#2e343d] text-base sm:text-xs text-white focus:outline-none focus:border-[#84cc16]"
                     >
                       <option value="Morning (6:00 AM - 9:00 AM)">Morning (6:00 AM - 9:00 AM)</option>
                       <option value="Afternoon (12:00 PM - 3:00 PM)">Afternoon (12:00 PM - 3:00 PM)</option>

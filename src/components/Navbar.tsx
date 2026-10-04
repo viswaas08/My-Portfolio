@@ -37,6 +37,18 @@ export const Navbar: React.FC = () => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const navLinks = [
     { label: t.nav.home, path: '/' },
     { label: t.nav.services, path: '/services' },
@@ -78,17 +90,17 @@ export const Navbar: React.FC = () => {
             {/* Logo */}
             <Link 
               to="/" 
-              className="flex items-center gap-2.5 group"
+              className="flex items-center gap-2 group shrink-0"
             >
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-black text-lg tracking-wider shadow-md shadow-sky-500/20 group-hover:scale-105 transition">
+              <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center text-white font-black text-base sm:text-lg tracking-wider shadow-md shadow-sky-500/20 group-hover:scale-105 transition shrink-0">
                 V
               </div>
               <div className="flex flex-col">
-                <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white leading-none">
+                <span className="font-extrabold text-base sm:text-xl tracking-tight text-slate-900 dark:text-white leading-none">
                   {siteConfig.brand.name}
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest text-sky-600 dark:text-sky-400">
-                  {lang === 'ta' ? 'உள்ளூர் வணிக இணையதளம்' : 'Websites for Local Business'}
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider sm:tracking-widest text-sky-600 dark:text-sky-400">
+                  {lang === 'ta' ? 'உள்ளூர் வணிக தளம்' : 'Websites for Local Business'}
                 </span>
               </div>
             </Link>
@@ -117,16 +129,16 @@ export const Navbar: React.FC = () => {
             </nav>
 
             {/* Actions: Language Toggle + Theme Toggle + CTA */}
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5">
               {/* Language Switcher Button */}
               <button
                 onClick={toggleLang}
                 title={lang === 'en' ? 'தமிழில் பார்க்க கிளிக் செய்க' : 'Switch to English'}
                 aria-label="Toggle language between English and Tamil"
-                className="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                className="px-2 sm:px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition flex items-center gap-1 shadow-xs cursor-pointer"
               >
-                <Languages className="w-3.5 h-3.5 text-sky-500" />
-                <span className="font-semibold">{t.nav.langToggle}</span>
+                <Languages className="w-3.5 h-3.5 text-sky-500 shrink-0" />
+                <span className="font-semibold text-[11px] sm:text-xs">{t.nav.langToggle}</span>
               </button>
 
               {/* Theme toggle */}
@@ -164,71 +176,81 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile menu overlay */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden fixed inset-x-0 top-[65px] bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-xl px-4 py-6 space-y-4 animate-fadeIn">
-            {/* Quick Lang & Theme toggles inside mobile menu */}
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
-              <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
-                {lang === 'ta' ? 'மொழி / Theme' : 'Language & Theme'}
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={toggleLang}
-                  className="px-2.5 py-1 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-xs font-bold text-sky-700 dark:text-sky-300"
-                >
-                  {t.nav.langToggle}
-                </button>
-                <button
-                  onClick={toggleTheme}
-                  className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200"
-                >
-                  {theme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5" />}
-                </button>
-              </div>
-            </div>
+      </header>
 
-            <div className="grid grid-cols-2 gap-2">
-              {navLinks.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={(e) => handleNavClick(e, item)}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition ${
-                    location.pathname === item.path
-                      ? 'bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 font-bold'
-                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight className="w-4 h-4 opacity-50" />
-                </Link>
-              ))}
-            </div>
+      {/* Mobile Menu Backdrop */}
+      {mobileMenuOpen && (
+        <div
+          onClick={() => setMobileMenuOpen(false)}
+          className="lg:hidden fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-30 transition-opacity"
+          aria-hidden="true"
+        />
+      )}
 
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+      {/* Mobile menu dropdown */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-x-0 top-[60px] sm:top-[65px] z-40 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-2xl px-4 py-5 space-y-4 max-h-[calc(100vh-65px)] overflow-y-auto overscroll-contain animate-fadeIn">
+          {/* Quick Lang & Theme toggles inside mobile menu */}
+          <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+              {lang === 'ta' ? 'மொழி / Theme' : 'Language & Theme'}
+            </span>
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  setModalOpen(true);
-                }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold shadow-md shadow-sky-600/20 transition cursor-pointer text-sm"
+                onClick={toggleLang}
+                className="px-2.5 py-1 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-xs font-bold text-sky-700 dark:text-sky-300"
               >
-                <Sparkles className="w-4 h-4" />
-                {t.nav.cta}
+                {t.nav.langToggle}
               </button>
-
-              <a
-                href={`tel:${siteConfig.contact.whatsappNumber}`}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium"
+              <button
+                onClick={toggleTheme}
+                className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200"
               >
-                <PhoneCall className="w-4 h-4 text-emerald-500" />
-                {t.nav.callDirect} {siteConfig.contact.phoneDisplay}
-              </a>
+                {theme === 'dark' ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5" />}
+              </button>
             </div>
           </div>
-        )}
-      </header>
+
+          <div className="grid grid-cols-2 gap-2">
+            {navLinks.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                onClick={(e) => handleNavClick(e, item)}
+                className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition ${
+                  location.pathname === item.path
+                    ? 'bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 font-bold'
+                    : 'text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+                }`}
+              >
+                <span className="truncate">{item.label}</span>
+                <ChevronRight className="w-3.5 h-3.5 opacity-50 shrink-0 ml-1" />
+              </Link>
+            ))}
+          </div>
+
+          <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setModalOpen(true);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold shadow-md shadow-sky-600/20 transition cursor-pointer text-sm"
+            >
+              <Sparkles className="w-4 h-4" />
+              {t.nav.cta}
+            </button>
+
+            <a
+              href={`tel:${siteConfig.contact.whatsappNumber}`}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium"
+            >
+              <PhoneCall className="w-4 h-4 text-emerald-500" />
+              {t.nav.callDirect} {siteConfig.contact.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      )}
 
       <ClientInquiryModal
         isOpen={modalOpen}

@@ -185,12 +185,12 @@ export const ShopDemo: React.FC = () => {
             <p className="text-xs text-slate-500">Carefully curated for freshness and best local pricing.</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-1.5 px-0.5 sm:flex-wrap">
             {categories.map((c) => (
               <button
                 key={c}
                 onClick={() => setActiveCategory(c)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 transition cursor-pointer ${
                   activeCategory === c
                     ? 'bg-emerald-600 text-white'
                     : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'
@@ -255,7 +255,7 @@ export const ShopDemo: React.FC = () => {
                 value={listText}
                 onChange={(e) => setListText(e.target.value)}
                 placeholder="e.g.&#10;1. 5kg Ponni Boiled Rice&#10;2. 1L Cold Pressed Gingelly Oil&#10;3. 500g Toor Dal&#10;4. 2 packets A2 Cow Milk..."
-                className="w-full p-3.5 rounded-xl bg-white border border-emerald-300 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                className="w-full p-3.5 rounded-xl bg-white border border-emerald-300 text-base sm:text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
               />
               <button
                 type="submit"

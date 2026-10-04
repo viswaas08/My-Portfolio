@@ -176,12 +176,12 @@ export const SalonDemo: React.FC = () => {
             Salon Services & Therapies
           </h2>
 
-          <div className="flex justify-center gap-2 pt-3">
+          <div className="flex items-center sm:justify-center gap-2 pt-3 overflow-x-auto no-scrollbar pb-1 px-1 sm:flex-wrap">
             {(['Hair', 'Skin', 'Makeup', 'Bridal'] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition cursor-pointer ${
                   activeTab === tab
                     ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
                     : 'bg-[#1e1823] text-[#b8aab9] hover:bg-[#281f30]'
@@ -280,7 +280,7 @@ export const SalonDemo: React.FC = () => {
                     value={aptForm.name}
                     onChange={(e) => setAptForm({ ...aptForm, name: e.target.value })}
                     placeholder="Priya Sundar"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-xs text-white focus:outline-none focus:border-rose-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-base sm:text-xs text-white focus:outline-none focus:border-rose-400"
                   />
                 </div>
 
@@ -292,7 +292,7 @@ export const SalonDemo: React.FC = () => {
                     value={aptForm.phone}
                     onChange={(e) => setAptForm({ ...aptForm, phone: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-xs text-white focus:outline-none focus:border-rose-400"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-base sm:text-xs text-white focus:outline-none focus:border-rose-400"
                   />
                 </div>
 
@@ -304,7 +304,7 @@ export const SalonDemo: React.FC = () => {
                       required
                       value={aptForm.date}
                       onChange={(e) => setAptForm({ ...aptForm, date: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-xs text-white focus:outline-none focus:border-rose-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-base sm:text-xs text-white focus:outline-none focus:border-rose-400"
                     />
                   </div>
                   <div>
@@ -312,7 +312,7 @@ export const SalonDemo: React.FC = () => {
                     <select
                       value={aptForm.timeSlot}
                       onChange={(e) => setAptForm({ ...aptForm, timeSlot: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-xs text-white focus:outline-none focus:border-rose-400"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#231a28] border border-[#3b2b42] text-base sm:text-xs text-white focus:outline-none focus:border-rose-400"
                     >
                       <option value="10:30 AM">10:30 AM</option>
                       <option value="12:00 PM">12:00 PM</option>

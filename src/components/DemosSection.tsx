@@ -40,12 +40,12 @@ export const DemosSection: React.FC = () => {
           </p>
 
           {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+          <div className="flex items-center sm:justify-center gap-2 pt-4 overflow-x-auto no-scrollbar pb-2 px-1 sm:flex-wrap">
             {categories.map((cat) => (
               <button
                 key={cat.key}
                 onClick={() => setFilter(cat.key)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition cursor-pointer ${
                   filter === cat.key
                     ? 'bg-sky-600 text-white shadow-sm'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'

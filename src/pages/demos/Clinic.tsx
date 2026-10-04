@@ -309,7 +309,7 @@ export const ClinicDemo: React.FC = () => {
                     value={aptForm.patientName}
                     onChange={(e) => setAptForm({ ...aptForm, patientName: e.target.value })}
                     placeholder="e.g. Radhika Iyer"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                   />
                 </div>
                 <div>
@@ -320,7 +320,7 @@ export const ClinicDemo: React.FC = () => {
                     value={aptForm.phone}
                     onChange={(e) => setAptForm({ ...aptForm, phone: e.target.value })}
                     placeholder="+91 98765 43210"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                   />
                 </div>
               </div>
@@ -331,7 +331,7 @@ export const ClinicDemo: React.FC = () => {
                   <select
                     value={aptForm.doctor}
                     onChange={(e) => setAptForm({ ...aptForm, doctor: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                   >
                     {doctors.map((d, i) => (
                       <option key={i} value={d.name}>{d.name}</option>
@@ -345,7 +345,7 @@ export const ClinicDemo: React.FC = () => {
                     required
                     value={aptForm.date}
                     onChange={(e) => setAptForm({ ...aptForm, date: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                   />
                 </div>
                 <div>
@@ -353,7 +353,7 @@ export const ClinicDemo: React.FC = () => {
                   <select
                     value={aptForm.slot}
                     onChange={(e) => setAptForm({ ...aptForm, slot: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                   >
                     <option value="Morning (09:30 AM - 01:00 PM)">Morning (09:30 AM - 01:00 PM)</option>
                     <option value="Evening (05:30 PM - 08:30 PM)">Evening (05:30 PM - 08:30 PM)</option>
@@ -368,7 +368,7 @@ export const ClinicDemo: React.FC = () => {
                   value={aptForm.notes}
                   onChange={(e) => setAptForm({ ...aptForm, notes: e.target.value })}
                   placeholder="e.g. Mild fever since 2 days, general checkup..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-teal-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-base sm:text-xs text-slate-900 focus:outline-none focus:border-teal-500"
                 />
               </div>
 

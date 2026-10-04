@@ -345,12 +345,12 @@ export const RestaurantDemo: React.FC = () => {
             </p>
 
             {/* Category tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-4">
+            <div className="flex items-center sm:justify-center gap-2 pt-4 overflow-x-auto no-scrollbar pb-2 px-1 sm:flex-wrap">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap shrink-0 transition cursor-pointer ${
                     activeCategory === cat
                       ? 'bg-amber-500 text-stone-950 shadow-md shadow-amber-500/20'
                       : 'bg-stone-900 text-stone-300 hover:bg-stone-800'
@@ -463,7 +463,7 @@ export const RestaurantDemo: React.FC = () => {
                         value={tableForm.name}
                         onChange={(e) => setTableForm({ ...tableForm, name: e.target.value })}
                         placeholder="Ramesh Sharma"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <div>
@@ -476,7 +476,7 @@ export const RestaurantDemo: React.FC = () => {
                         value={tableForm.phone}
                         onChange={(e) => setTableForm({ ...tableForm, phone: e.target.value })}
                         placeholder="+91 98765 43210"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
                       />
                     </div>
                   </div>
@@ -489,7 +489,7 @@ export const RestaurantDemo: React.FC = () => {
                       <select
                         value={tableForm.guests}
                         onChange={(e) => setTableForm({ ...tableForm, guests: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
                       >
                         <option value="2 Guests">2 Guests</option>
                         <option value="4 Guests">4 Guests</option>
@@ -506,7 +506,7 @@ export const RestaurantDemo: React.FC = () => {
                         required
                         value={tableForm.date}
                         onChange={(e) => setTableForm({ ...tableForm, date: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
                       />
                     </div>
                     <div>
@@ -516,7 +516,7 @@ export const RestaurantDemo: React.FC = () => {
                       <select
                         value={tableForm.time}
                         onChange={(e) => setTableForm({ ...tableForm, time: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
                       >
                         <option value="12:30 PM">12:30 PM (Lunch)</option>
                         <option value="01:30 PM">01:30 PM (Lunch)</option>
