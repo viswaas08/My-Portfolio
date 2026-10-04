@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, MessageSquare } from 'lucide-react';
-import { faqData } from '../data/faq';
+import { getFaqData } from '../data/faq';
 import { getWhatsAppUrl } from '../config/siteConfig';
+import { useLanguage } from '../context/LanguageContext';
 
 export const FAQSection: React.FC = () => {
+  const { t, lang } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const currentFaqData = getFaqData(lang);
 
   const toggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -17,19 +21,19 @@ export const FAQSection: React.FC = () => {
         <div className="text-center space-y-4 mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 text-xs font-bold uppercase tracking-wider border border-sky-500/20">
             <HelpCircle className="w-3.5 h-3.5" />
-            <span>Frequently Asked Questions</span>
+            <span>{t.faq.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Everything You Need to Know
+            {t.faq.title}
           </h2>
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-            Direct answers to common business questions about timelines, custom domains, updates, and payments.
+            {t.faq.subtitle}
           </p>
         </div>
 
         {/* Accordion */}
         <div className="space-y-3.5">
-          {faqData.map((item, idx) => {
+          {currentFaqData.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
               <div
@@ -67,10 +71,10 @@ export const FAQSection: React.FC = () => {
         <div className="mt-12 text-center p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
             <h4 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">
-              Have a specific question not covered here?
+              {t.faq.bannerTitle}
             </h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              Send a message directly to Viswaas for a quick, no-pressure chat.
+              {t.faq.bannerSub}
             </p>
           </div>
           <a
@@ -80,7 +84,7 @@ export const FAQSection: React.FC = () => {
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-semibold transition shrink-0"
           >
             <MessageSquare className="w-4 h-4" />
-            <span>Ask on WhatsApp</span>
+            <span>{t.faq.whatsappBtn}</span>
           </a>
         </div>
       </div>

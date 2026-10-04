@@ -28,10 +28,11 @@ A production-grade freelance agency website designed to convert local businesses
   - Floating "Want a website like this? -> Get This Website" conversion banner on every demo.
   - Direct WhatsApp links with automated pre-filled messages.
   - Lead capture consultation modal with package pre-selection.
-- **Engineered for Speed & Aesthetics**:
+- **Engineered for Speed, Accessibility & Localization**:
+  - **Website-Wide Tamil Support (தமிழ்)**: 1-click toggle between English and Tamil across all sections, navigation, pricing, FAQs, lead modal, and floating conversion CTAs, persisted in `localStorage`.
+  - **Full Light & Dark Theme Support**: Smooth transitions, customized color palettes, glassmorphism, and persistent theme states.
   - Built with React 19, Vite, Tailwind CSS, Lucide icons, and modern design principles.
-  - Fast bundle size: ~469 kB minified (124 kB gzip) with sub-second production builds.
-  - Full Light & Dark theme toggle with persistent `localStorage` preference.
+  - Ultra-fast bundle with sub-second production builds.
 
 ---
 

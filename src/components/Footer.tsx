@@ -9,8 +9,11 @@ import {
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { t, lang } = useLanguage();
+
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -27,7 +30,7 @@ export const Footer: React.FC = () => {
             </Link>
 
             <p className="text-slate-600 dark:text-slate-400 text-sm max-w-sm leading-relaxed">
-              Modern websites for ambitious local businesses. Fast loading, mobile-first, and designed to turn online searches into paying customers.
+              {t.footer.tagline}
             </p>
 
             <div className="pt-2 flex items-center gap-3">
@@ -71,37 +74,37 @@ export const Footer: React.FC = () => {
           {/* Quick Links */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-              Navigation
+              {t.footer.navigation}
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Home
+                  {t.nav.home}
                 </Link>
               </li>
               <li>
                 <Link to="/services" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Services
+                  {t.nav.services}
                 </Link>
               </li>
               <li>
                 <Link to="/pricing" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Pricing Plans
+                  {t.nav.pricing}
                 </Link>
               </li>
               <li>
                 <Link to="/demos" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Demo Showroom
+                  {t.nav.demos}
                 </Link>
               </li>
               <li>
                 <Link to="/projects" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Technical Projects
+                  {t.nav.projects}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  Contact & Quote
+                  {t.nav.contact}
                 </Link>
               </li>
             </ul>
@@ -110,42 +113,42 @@ export const Footer: React.FC = () => {
           {/* Business Demos */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-              Working Demos
+              {t.footer.workingDemos}
             </h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/demos/restaurant" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Restaurant (Spice Route)</span>
+                  <span>{lang === 'ta' ? 'உணவகம் (Spice Route)' : 'Restaurant (Spice Route)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
               <li>
                 <Link to="/demos/cafe" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Cafe (Brew & Bean)</span>
+                  <span>{lang === 'ta' ? 'கஃபே (Brew & Bean)' : 'Cafe (Brew & Bean)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
               <li>
                 <Link to="/demos/bakery" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Bakery (Sweet Crumbs)</span>
+                  <span>{lang === 'ta' ? 'பேக்கரி (Sweet Crumbs)' : 'Bakery (Sweet Crumbs)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
               <li>
                 <Link to="/demos/salon" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Salon (Glow Studio)</span>
+                  <span>{lang === 'ta' ? 'சலூன் (Glow Studio)' : 'Salon (Glow Studio)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
               <li>
                 <Link to="/demos/gym" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Gym (Forge Fitness)</span>
+                  <span>{lang === 'ta' ? 'ஜிம் (Forge Fitness)' : 'Gym (Forge Fitness)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
               <li>
                 <Link to="/demos/clinic" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center justify-between">
-                  <span>Clinic (CarePoint)</span>
+                  <span>{lang === 'ta' ? 'கிளினிக் (CarePoint)' : 'Clinic (CarePoint)'}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-50" />
                 </Link>
               </li>
@@ -155,7 +158,7 @@ export const Footer: React.FC = () => {
           {/* Contact Details */}
           <div className="space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 dark:text-white">
-              Direct Contact
+              {t.footer.directContact}
             </h4>
             <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-400">
               <li className="flex items-center gap-2">
@@ -178,7 +181,7 @@ export const Footer: React.FC = () => {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold hover:bg-emerald-600/20 transition"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  WhatsApp Direct Chat
+                  {t.contact.chatDirect}
                 </a>
               </li>
             </ul>
@@ -187,13 +190,9 @@ export const Footer: React.FC = () => {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
-          <p>© 2026 Viswaa Web. All rights reserved.</p>
+          <p>{t.footer.rights}</p>
           <p>
-            Architected & Built by{' '}
-            <strong className="text-slate-700 dark:text-slate-200">
-              {siteConfig.brand.developer}
-            </strong>{' '}
-            • Full-Stack Developer for Local Businesses
+            {t.footer.builtBy}
           </p>
         </div>
       </div>

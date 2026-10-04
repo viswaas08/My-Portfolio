@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, MessageSquare } from 'lucide-react';
 import { ClientInquiryModal } from './ClientInquiryModal';
 import { getWhatsAppUrl } from '../config/siteConfig';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DemoFloatingCTAProps {
   businessName: string;
@@ -15,6 +16,7 @@ export const DemoFloatingCTA: React.FC<DemoFloatingCTAProps> = ({
   businessType,
   recommendedPackage = 'Business (₹9,999)',
 }) => {
+  const { t } = useLanguage();
   const [modalOpen, setModalOpen] = useState(false);
 
   const directWhatsApp = () => {
@@ -37,14 +39,14 @@ export const DemoFloatingCTA: React.FC<DemoFloatingCTAProps> = ({
               title="Return to Demo Showroom"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">All</span> Demos
+              <span>{t.floating.allDemos}</span>
             </Link>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
               <div className="text-xs sm:text-sm font-medium">
-                <span className="text-slate-300">Live Demo: </span>
+                <span className="text-slate-300">{t.floating.demoLabel} </span>
                 <span className="text-white font-semibold">{businessName}</span>
-                <span className="hidden md:inline text-slate-400 ml-1.5">• Want a website like this for your business?</span>
+                <span className="hidden md:inline text-slate-400 ml-1.5">• {t.floating.question}</span>
               </div>
             </div>
           </div>
@@ -56,14 +58,14 @@ export const DemoFloatingCTA: React.FC<DemoFloatingCTAProps> = ({
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs sm:text-sm font-medium transition cursor-pointer"
             >
               <MessageSquare className="w-3.5 h-3.5" />
-              <span className="hidden xs:inline">WhatsApp</span>
+              <span>{t.floating.whatsapp}</span>
             </button>
             <button
               onClick={() => setModalOpen(true)}
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-sky-500/25 transition cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5" />
-              Get This Website
+              {t.floating.getWebsite}
             </button>
           </div>
         </div>

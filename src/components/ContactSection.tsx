@@ -11,8 +11,11 @@ import {
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ContactSection: React.FC = () => {
+  const { t, lang } = useLanguage();
+
   const [formData, setFormData] = useState({
     name: '',
     businessName: '',
@@ -28,7 +31,7 @@ export const ContactSection: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.whatsapp.trim()) {
-      setError('Please provide your name and WhatsApp contact number.');
+      setError(lang === 'ta' ? 'தயவுசெய்து உங்கள் பெயர் மற்றும் வாட்ஸ்அப் எண்ணை உள்ளிடவும்.' : 'Please provide your name and WhatsApp contact number.');
       return;
     }
     setError('');
@@ -52,13 +55,13 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <div className="space-y-3">
               <span className="text-xs uppercase font-bold tracking-widest text-sky-600 dark:text-sky-400 bg-sky-500/10 px-3 py-1 rounded-full border border-sky-500/20">
-                Get In Touch
+                {t.contact.badge}
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Let's Build Your Online Presence
+                {t.contact.title}
               </h2>
               <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-                Whether you run a cafe, clinic, salon, gym, or retail shop, let's talk about how a modern website can attract more local customers.
+                {t.contact.subtitle}
               </p>
             </div>
 
@@ -76,15 +79,15 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">
-                      Fastest Response
+                      {t.contact.fastestResponse}
                     </span>
                     <strong className="text-sm text-slate-900 dark:text-white font-semibold">
-                      WhatsApp Chat Direct
+                      {t.contact.chatDirect}
                     </strong>
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
-                  Open Chat →
+                  {t.contact.openChat}
                 </span>
               </a>
 
@@ -98,7 +101,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                   <div>
                     <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">
-                      Email Inquiries
+                      {t.contact.emailInquiries}
                     </span>
                     <strong className="text-sm text-slate-900 dark:text-white font-semibold">
                       {siteConfig.contact.email}
@@ -106,7 +109,7 @@ export const ContactSection: React.FC = () => {
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform">
-                  Send Email →
+                  {t.contact.sendEmail}
                 </span>
               </a>
 
@@ -116,10 +119,10 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <span className="text-xs text-slate-500 dark:text-slate-400 block font-medium">
-                    Base Location
+                    {t.contact.baseLocation}
                   </span>
                   <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                    {siteConfig.contact.location} (Available Worldwide)
+                    {t.contact.locationVal}
                   </span>
                 </div>
               </div>
@@ -128,7 +131,7 @@ export const ContactSection: React.FC = () => {
             {/* Social links row */}
             <div className="pt-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                Developer Profiles
+                {t.contact.devProfiles}
               </span>
               <div className="flex items-center gap-3">
                 <a
@@ -162,10 +165,10 @@ export const ContactSection: React.FC = () => {
                     <CheckCircle className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
-                    Thank You, {formData.name}!
+                    {t.contact.successTitle} {formData.name}!
                   </h3>
                   <p className="text-slate-600 dark:text-slate-300 text-sm max-w-md mx-auto">
-                    Your inquiry details for <strong>{formData.businessName || 'your business'}</strong> have been generated. Let's start the conversation on WhatsApp right away.
+                    {t.contact.successDesc}
                   </p>
                   <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <button
@@ -173,13 +176,13 @@ export const ContactSection: React.FC = () => {
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold shadow-md shadow-emerald-600/20 transition cursor-pointer text-sm"
                     >
                       <MessageSquare className="w-4 h-4" />
-                      Chat on WhatsApp Now
+                      {t.contact.whatsappBtn}
                     </button>
                     <button
                       onClick={() => setSubmitted(false)}
                       className="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition text-sm"
                     >
-                      Submit Another
+                      {t.contact.submitAnother}
                     </button>
                   </div>
                 </div>
@@ -188,7 +191,7 @@ export const ContactSection: React.FC = () => {
                   <div className="flex items-center gap-2 pb-2 border-b border-slate-100 dark:border-slate-700/60">
                     <Sparkles className="w-4 h-4 text-sky-500" />
                     <h3 className="font-bold text-slate-900 dark:text-white text-base">
-                      Project Inquiry Form
+                      {t.contact.formTitle}
                     </h3>
                   </div>
 
@@ -201,27 +204,27 @@ export const ContactSection: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                        Your Name *
+                        {t.contact.nameLabel}
                       </label>
                       <input
                         type="text"
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        placeholder="e.g. Ramesh Kumar"
+                        placeholder={lang === 'ta' ? "உதாரணம்: ரமேஷ் குமார்" : "e.g. Ramesh Kumar"}
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                        Business Name
+                        {t.contact.businessNameLabel}
                       </label>
                       <input
                         type="text"
                         value={formData.businessName}
                         onChange={(e) => setFormData({ ...formData, businessName: e.target.value })}
-                        placeholder="e.g. Annapoorna Cafe"
+                        placeholder={lang === 'ta' ? "உதாரணம்: அன்னபூர்ணா கஃபே" : "e.g. Annapoorna Cafe"}
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                       />
                     </div>
@@ -230,28 +233,28 @@ export const ContactSection: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                        Business Type
+                        {t.contact.businessTypeLabel}
                       </label>
                       <select
                         value={formData.businessType}
                         onChange={(e) => setFormData({ ...formData, businessType: e.target.value })}
                         className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                       >
-                        <option value="Restaurant">Restaurant</option>
-                        <option value="Cafe">Cafe / Coffee Shop</option>
-                        <option value="Bakery">Bakery / Patisserie</option>
-                        <option value="Retail Shop">Retail Store / Supermarket</option>
-                        <option value="Salon">Salon & Beauty Spa</option>
-                        <option value="Gym">Gym & Fitness Centre</option>
-                        <option value="Tuition Centre">Tuition Centre / Academy</option>
-                        <option value="Clinic">Clinic / Healthcare</option>
-                        <option value="Other Local Business">Other Local Business</option>
+                        <option value="Restaurant">{lang === 'ta' ? "உணவகம் (Restaurant)" : "Restaurant"}</option>
+                        <option value="Cafe">{lang === 'ta' ? "கஃபே (Cafe / Coffee)" : "Cafe / Coffee Shop"}</option>
+                        <option value="Bakery">{lang === 'ta' ? "பேக்கரி (Bakery)" : "Bakery / Patisserie"}</option>
+                        <option value="Retail Shop">{lang === 'ta' ? "சில்லறை கடை (Retail Store)" : "Retail Store / Supermarket"}</option>
+                        <option value="Salon">{lang === 'ta' ? "சலூன் & ஸ்பா (Salon / Spa)" : "Salon & Beauty Spa"}</option>
+                        <option value="Gym">{lang === 'ta' ? "ஜிம் (Gym & Fitness)" : "Gym & Fitness Centre"}</option>
+                        <option value="Tuition Centre">{lang === 'ta' ? "டியூஷன் மையம் (Tuition / Academy)" : "Tuition Centre / Academy"}</option>
+                        <option value="Clinic">{lang === 'ta' ? "மருத்துவமனை / கிளினிக் (Clinic)" : "Clinic / Healthcare"}</option>
+                        <option value="Other Local Business">{lang === 'ta' ? "பிற வணிகங்கள் (Other Business)" : "Other Local Business"}</option>
                       </select>
                     </div>
 
                     <div>
                       <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                        WhatsApp Number *
+                        {t.contact.phoneLabel}
                       </label>
                       <input
                         type="tel"
@@ -266,7 +269,7 @@ export const ContactSection: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                      Email Address (Optional)
+                      {t.contact.emailLabel}
                     </label>
                     <input
                       type="email"
@@ -279,13 +282,13 @@ export const ContactSection: React.FC = () => {
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                      Requirements & Details
+                      {t.contact.reqLabel}
                     </label>
                     <textarea
                       rows={4}
                       value={formData.requirements}
                       onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-                      placeholder="e.g. We want a 5-page website with a digital food menu, WhatsApp takeaway ordering, and our Google Maps location..."
+                      placeholder={lang === 'ta' ? "உதாரணம்: எனக்கு மெனு கார்டு மற்றும் வாட்ஸ்அப் ஆர்டர் வசதியுடன் கூடிய 5 பக்க இணையதளம் தேவை..." : "e.g. We want a 5-page website with a digital food menu, WhatsApp takeaway ordering, and our Google Maps location..."}
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                   </div>
@@ -296,7 +299,7 @@ export const ContactSection: React.FC = () => {
                       className="w-full sm:flex-1 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-semibold shadow-md shadow-sky-600/25 transition cursor-pointer text-sm"
                     >
                       <Send className="w-4 h-4" />
-                      <span>Send Enquiry</span>
+                      <span>{t.contact.sendBtn}</span>
                     </button>
 
                     <button
@@ -305,13 +308,13 @@ export const ContactSection: React.FC = () => {
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition cursor-pointer text-sm"
                     >
                       <MessageSquare className="w-4 h-4" />
-                      <span>Chat on WhatsApp</span>
+                      <span>{t.contact.whatsappBtn}</span>
                     </button>
                   </div>
 
                   <div className="pt-2 flex items-center justify-center gap-2 text-[11px] text-slate-400 dark:text-slate-500">
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>Your contact details are strictly kept private. No spam.</span>
+                    <span>{t.contact.privacyNote}</span>
                   </div>
                 </form>
               )}
