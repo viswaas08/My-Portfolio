@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 interface CafeItem {
   id: string;
@@ -115,6 +117,8 @@ const cafeMenu: CafeItem[] = [
 ];
 
 export const CafeDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('Brew & Bean');
   const [activeTab, setActiveTab] = useState<string>('All');
 
   const categories = ['All', 'Coffee', 'Tea', 'Cold Drinks', 'Desserts', 'Snacks'];
@@ -124,12 +128,14 @@ export const CafeDemo: React.FC = () => {
     : cafeMenu.filter((i) => i.category === activeTab);
 
   const handleWhatsAppOrder = (dish: string, price: number) => {
-    const msg = `Hi Brew & Bean Cafe, I would like to order *${dish}* (₹${price}) for pickup/table.`;
+    const msg = `Hi ${brandName}, I would like to order *${dish}* (₹${price}) for pickup/table.`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-[#14100c] text-[#f7f2ea] font-sans pb-28">
+      <BrandCustomizerBar businessType="Cafe" defaultBrandName="Brew & Bean" />
+
       {/* Cafe Header */}
       <header className="sticky top-0 z-30 bg-[#14100c]/90 backdrop-blur-md border-b border-[#3d2f23]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
@@ -139,7 +145,7 @@ export const CafeDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-[#f7f2ea]">
-                BREW & BEAN
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-[#c58f5e] uppercase tracking-widest font-semibold">
                 Specialty Coffee Roasters
@@ -155,7 +161,7 @@ export const CafeDemo: React.FC = () => {
           </nav>
 
           <a
-            href={getWhatsAppUrl("Hi Brew & Bean, I would like to reserve a cozy corner table for today.")}
+            href={getWhatsAppUrl(`Hi ${brandName}, I would like to reserve a cozy corner table for today.`)}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-xl bg-[#c58f5e] hover:bg-[#d69f6e] text-[#14100c] text-xs font-bold transition shadow-md"
@@ -389,7 +395,7 @@ export const CafeDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="Brew & Bean Cafe"
+        businessName={brandName}
         businessType="Cafe"
         recommendedPackage="Business (₹9,999)"
       />

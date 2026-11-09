@@ -248,6 +248,15 @@ export const Navbar: React.FC = () => {
               <PhoneCall className="w-4 h-4 text-emerald-500" />
               {t.nav.callDirect} {siteConfig.contact.phoneDisplay}
             </a>
+
+            <Link
+              to="/admin"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-1.5 py-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-xs transition font-medium"
+            >
+              <span>{lang === 'ta' ? 'நிர்வாக போர்ட்டல் (Admin)' : 'Admin Portal (Plan Pricing & CRM)'}</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       )}

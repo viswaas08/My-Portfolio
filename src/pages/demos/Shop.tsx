@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const ShopDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('Urban Mart');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [listText, setListText] = useState('');
 
@@ -102,12 +106,14 @@ export const ShopDemo: React.FC = () => {
 
   const handleSendList = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Hi Urban Mart, I would like to order the following grocery list for home delivery:\n\n${listText || '1. Ponni Rice 5kg\n2. Milk 1L\n3. Sunflower oil 1L'}`;
+    const msg = `Hi ${brandName}, I would like to order the following grocery list for home delivery:\n\n${listText || '1. Ponni Rice 5kg\n2. Milk 1L\n3. Sunflower oil 1L'}`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans pb-28">
+      <BrandCustomizerBar businessType="Retail Shop" defaultBrandName="Urban Mart" />
+
       {/* Retail Header */}
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -117,7 +123,7 @@ export const ShopDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-slate-900">
-                URBAN MART
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-emerald-600 font-bold uppercase tracking-widest">
                 Daily Essentials & Groceries
@@ -269,7 +275,7 @@ export const ShopDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="Urban Mart Retail"
+        businessName={brandName}
         businessType="Retail Shop"
         recommendedPackage="Starter (₹4,999)"
       />

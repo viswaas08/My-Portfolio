@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const SalonDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('Glow Studio');
   const [activeTab, setActiveTab] = useState<'Hair' | 'Skin' | 'Makeup' | 'Bridal'>('Hair');
   const [appointmentModal, setAppointmentModal] = useState(false);
   const [aptForm, setAptForm] = useState({
@@ -56,12 +60,14 @@ export const SalonDemo: React.FC = () => {
   };
 
   const handleWhatsAppBooking = () => {
-    const msg = `Hi Glow Studio Salon, I would like to book an appointment:\n- Name: ${aptForm.name}\n- Service: ${aptForm.service}\n- Date: ${aptForm.date || 'Soon'}\n- Time Slot: ${aptForm.timeSlot}\n- Phone: ${aptForm.phone}`;
+    const msg = `Hi ${brandName}, I would like to book an appointment:\n- Name: ${aptForm.name}\n- Service: ${aptForm.service}\n- Date: ${aptForm.date || 'Soon'}\n- Time Slot: ${aptForm.timeSlot}\n- Phone: ${aptForm.phone}`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-[#110f13] text-[#f7f3f6] font-sans pb-28">
+      <BrandCustomizerBar businessType="Salon" defaultBrandName="Glow Studio" />
+
       {/* Salon Header */}
       <header className="sticky top-0 z-30 bg-[#110f13]/90 backdrop-blur-md border-b border-[#2d2532]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -71,7 +77,7 @@ export const SalonDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-white font-serif">
-                GLOW STUDIO
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-rose-300 font-bold uppercase tracking-widest">
                 Luxury Salon & Bridal Lounge
@@ -336,7 +342,7 @@ export const SalonDemo: React.FC = () => {
       )}
 
       <DemoFloatingCTA
-        businessName="Glow Studio Salon"
+        businessName={brandName}
         businessType="Salon"
         recommendedPackage="Business (₹9,999)"
       />

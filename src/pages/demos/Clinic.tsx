@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const ClinicDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('CarePoint Clinic');
   const [aptForm, setAptForm] = useState({
     patientName: '',
     phone: '',
@@ -81,12 +85,14 @@ export const ClinicDemo: React.FC = () => {
   };
 
   const handleWhatsAppBooking = () => {
-    const msg = `Hello CarePoint Clinic, I would like to request an appointment:\n- Patient: ${aptForm.patientName}\n- Doctor/Dept: ${aptForm.doctor}\n- Date: ${aptForm.date || 'Today/Tomorrow'}\n- Time Slot: ${aptForm.slot}\n- Phone: ${aptForm.phone}\n- Brief Symptom: ${aptForm.notes || 'General consultation'}`;
+    const msg = `Hello ${brandName}, I would like to request an appointment:\n- Patient: ${aptForm.patientName}\n- Doctor/Dept: ${aptForm.doctor}\n- Date: ${aptForm.date || 'Today/Tomorrow'}\n- Time Slot: ${aptForm.slot}\n- Phone: ${aptForm.phone}\n- Brief Symptom: ${aptForm.notes || 'General consultation'}`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-[#f7fafc] text-slate-900 font-sans pb-28">
+      <BrandCustomizerBar businessType="Clinic" defaultBrandName="CarePoint Clinic" />
+
       {/* Clinic Header */}
       <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -96,7 +102,7 @@ export const ClinicDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-slate-900">
-                CAREPOINT CLINIC
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-teal-600 font-bold uppercase tracking-wider">
                 Family Health & Multispeciality Centre
@@ -384,7 +390,7 @@ export const ClinicDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="CarePoint Clinic"
+        businessName={brandName}
         businessType="Clinic"
         recommendedPackage="Business (₹9,999)"
       />

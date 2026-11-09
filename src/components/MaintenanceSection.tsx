@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ShieldCheck, 
   Sparkles, 
@@ -12,13 +12,23 @@ import {
   Lock,
   Globe
 } from 'lucide-react';
-import { maintenancePlans } from '../config/agencyConfig';
+import { maintenancePlans as defaultMaintenancePlans } from '../config/agencyConfig';
+import { PricingService } from '../services/pricingService';
 import { getWhatsAppUrl } from '../config/siteConfig';
 import { ClientInquiryModal } from './ClientInquiryModal';
 
 export const MaintenanceSection: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [plans, setPlans] = useState(PricingService.getMaintenancePlans());
   const [selectedPlan, setSelectedPlan] = useState<string>('Website Care (₹1,499/mo)');
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setPlans(PricingService.getMaintenancePlans());
+    };
+    window.addEventListener('pricing_updated', handleUpdate);
+    return () => window.removeEventListener('pricing_updated', handleUpdate);
+  }, []);
 
   const handleSelectPlan = (planName: string, price: string) => {
     setSelectedPlan(`${planName} (${price})`);
@@ -45,7 +55,7 @@ export const MaintenanceSection: React.FC = () => {
 
           {/* 2 Plans Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
-            {maintenancePlans.map((plan) => {
+            {plans.map((plan) => {
               const isAdvanced = plan.id === 'advanced-care';
               return (
                 <div
@@ -87,7 +97,7 @@ export const MaintenanceSection: React.FC = () => {
                         What's Included:
                       </span>
                       <ul className="space-y-2.5">
-                        {plan.features.map((feature, fIdx) => (
+                        {plan.features.map((feature: string, fIdx: number) => (
                           <li key={fIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-200">
                             <Check className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                             <span>{feature}</span>
@@ -103,7 +113,7 @@ export const MaintenanceSection: React.FC = () => {
                         <span>Scope & Transparency:</span>
                       </div>
                       <ul className="list-disc list-inside space-y-1 pl-1">
-                        {plan.disclaimers.map((disc, dIdx) => (
+                        {plan.disclaimers?.map((disc: string, dIdx: number) => (
                           <li key={dIdx} className="leading-tight">{disc}</li>
                         ))}
                       </ul>

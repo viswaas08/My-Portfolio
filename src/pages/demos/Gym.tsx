@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const GymDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('Forge Fitness');
   const [trialForm, setTrialForm] = useState({
     name: '',
     phone: '',
@@ -74,12 +78,14 @@ export const GymDemo: React.FC = () => {
   };
 
   const handleWhatsAppPlan = (planName: string, price: string) => {
-    const msg = `Hi Forge Fitness, I am interested in joining the *${planName}* (${price}). Please let me know how to enroll.`;
+    const msg = `Hi ${brandName}, I am interested in joining the *${planName}* (${price}). Please let me know how to enroll.`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-[#0d0f11] text-[#f4f4f4] font-sans pb-28">
+      <BrandCustomizerBar businessType="Gym" defaultBrandName="Forge Fitness" />
+
       {/* Gym Header */}
       <header className="sticky top-0 z-30 bg-[#0d0f11]/90 backdrop-blur-md border-b border-[#25282d]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -89,7 +95,7 @@ export const GymDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-black text-xl tracking-tight text-white uppercase italic">
-                FORGE FITNESS
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-[#84cc16] font-bold uppercase tracking-widest">
                 Strength & Performance Club
@@ -349,7 +355,7 @@ export const GymDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="Forge Fitness Gym"
+        businessName={brandName}
         businessType="Gym"
         recommendedPackage="Business (₹9,999)"
       />

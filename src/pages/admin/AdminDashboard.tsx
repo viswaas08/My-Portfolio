@@ -19,16 +19,20 @@ import {
   PieChart
 } from 'lucide-react';
 import { StorageService } from '../../services/storageService';
+import { PricingService } from '../../services/pricingService';
 import { ClientRecord } from '../../types/agency';
+import { PricingTier } from '../../data/pricing';
 
 export const AdminDashboard: React.FC = () => {
   const [metrics, setMetrics] = useState(StorageService.getMetrics());
   const [clients, setClients] = useState<ClientRecord[]>(StorageService.getClients());
   const [copiedBackup, setCopiedBackup] = useState(false);
+  const [pricingTiers, setPricingTiers] = useState<PricingTier[]>(PricingService.getPricingTiers());
 
   const refreshData = () => {
     setMetrics(StorageService.getMetrics());
     setClients(StorageService.getClients());
+    setPricingTiers(PricingService.getPricingTiers());
   };
 
   useEffect(() => {
@@ -92,7 +96,7 @@ export const AdminDashboard: React.FC = () => {
           </button>
 
           <Link
-            to="/admin/clients"
+            to="/agency/clients"
             className="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold uppercase tracking-wider transition flex items-center gap-1.5 shadow-md shadow-sky-600/20"
           >
             <Plus className="w-3.5 h-3.5" />
@@ -192,6 +196,60 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
+      {/* Plan Prices Active Status & Quick Editor Card */}
+      <div className="rounded-3xl bg-gradient-to-r from-sky-950/40 via-slate-900 to-indigo-950/30 border border-sky-500/30 p-5 sm:p-6 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center border border-sky-500/30 font-bold">
+              ₹
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-white text-base">Public Website Plan Prices</h3>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  Live Active Rates
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Current package fees presented to website visitors and client onboarding forms.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/admin/pricing"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-bold text-xs uppercase tracking-wider transition shadow-md shadow-sky-600/20 shrink-0 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Edit Plan Prices</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          {pricingTiers.map((tier) => (
+            <div
+              key={tier.id}
+              className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 flex items-center justify-between"
+            >
+              <div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold text-white text-xs sm:text-sm">{tier.name}</span>
+                  {tier.popular && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400" title="Popular" />
+                  )}
+                </div>
+                <div className="text-[11px] text-slate-400 truncate max-w-[140px]">{tier.delivery}</div>
+              </div>
+              <div className="text-right">
+                <span className="text-base sm:text-lg font-black text-emerald-400 font-mono">
+                  {tier.price}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Domain Expiration Alerts Bar (Urgent Operational Warning) */}
       {metrics.domainAlerts.length > 0 && (
         <div className="rounded-2xl bg-amber-950/20 border border-amber-600/40 p-4 sm:p-5 space-y-3">
@@ -246,7 +304,7 @@ export const AdminDashboard: React.FC = () => {
               <p className="text-xs text-slate-400">Recent client websites, Vercel status & billing details</p>
             </div>
             <Link
-              to="/admin/clients"
+              to="/agency/clients"
               className="text-xs text-sky-400 hover:text-sky-300 font-semibold flex items-center gap-1"
             >
               <span>View All ({clients.length})</span>
@@ -320,7 +378,7 @@ export const AdminDashboard: React.FC = () => {
                 <h3 className="text-sm font-bold text-white">Lead Pipeline Funnel</h3>
                 <span className="text-[11px] text-slate-400">Total pipeline expected value</span>
               </div>
-              <Link to="/admin/leads" className="text-xs text-sky-400 hover:underline">
+              <Link to="/agency/leads" className="text-xs text-sky-400 hover:underline">
                 Manage
               </Link>
             </div>

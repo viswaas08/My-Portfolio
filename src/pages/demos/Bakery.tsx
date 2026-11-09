@@ -13,8 +13,13 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const BakeryDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('Sweet Crumbs Bakery');
+
   const [cakeForm, setCakeForm] = useState({
     flavor: 'Belgian Truffle Chocolate',
     weight: '1.0 Kg',
@@ -82,12 +87,14 @@ export const BakeryDemo: React.FC = () => {
 
   const handleCustomCakeWhatsApp = (e: React.FormEvent) => {
     e.preventDefault();
-    const msg = `Hi Sweet Crumbs Bakery, I want to book a Custom Cake:\n- Flavor: ${cakeForm.flavor}\n- Weight: ${cakeForm.weight}\n- Occasion: ${cakeForm.occasion}\n- Date: ${cakeForm.date || 'Soon'}\n- Message on Cake: "${cakeForm.nameMsg}"`;
+    const msg = `Hi ${brandName}, I want to book a Custom Cake:\n- Flavor: ${cakeForm.flavor}\n- Weight: ${cakeForm.weight}\n- Occasion: ${cakeForm.occasion}\n- Date: ${cakeForm.date || 'Soon'}\n- Message on Cake: "${cakeForm.nameMsg}"`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-[#faf7f5] text-[#2c2420] font-sans pb-28">
+      <BrandCustomizerBar businessType="Bakery" defaultBrandName="Sweet Crumbs Bakery" />
+
       {/* Bakery Header */}
       <header className="sticky top-0 z-30 bg-[#faf7f5]/90 backdrop-blur-md border-b border-[#ebdcd5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -97,7 +104,7 @@ export const BakeryDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-[#2c2420] font-serif">
-                Sweet Crumbs
+                {brandName}
               </span>
               <span className="text-[10px] block text-[#e17b88] font-bold uppercase tracking-widest">
                 Artisan Bakery & Patisserie
@@ -292,7 +299,7 @@ export const BakeryDemo: React.FC = () => {
                 <p className="text-xs text-[#735e55] leading-relaxed">{item.desc}</p>
                 <div className="pt-2">
                   <a
-                    href={getWhatsAppUrl(`Hi Sweet Crumbs, I'd like to order: ${item.name} (₹${item.price})`)}
+                    href={getWhatsAppUrl(`Hi ${brandName}, I'd like to order: ${item.name} (₹${item.price})`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-xs text-emerald-600 font-bold hover:underline"
@@ -307,7 +314,7 @@ export const BakeryDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="Sweet Crumbs Bakery"
+        businessName={brandName}
         businessType="Bakery"
         recommendedPackage="Business (₹9,999)"
       />

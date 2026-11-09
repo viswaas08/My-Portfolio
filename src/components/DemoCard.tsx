@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, Check, Sparkles } from 'lucide-react';
 import { DemoItem } from '../data/demos';
 import { useLanguage } from '../context/LanguageContext';
+import { useBrandCustomizer } from '../context/BrandCustomizerContext';
 
 interface DemoCardProps {
   demo: DemoItem;
@@ -10,6 +11,8 @@ interface DemoCardProps {
 
 export const DemoCard: React.FC<DemoCardProps> = ({ demo }) => {
   const { t } = useLanguage();
+  const { getBrandName } = useBrandCustomizer();
+  const effectiveBusinessName = getBrandName(demo.businessName);
 
   return (
     <div className="group rounded-3xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 overflow-hidden shadow-sm hover:shadow-xl hover:border-sky-500/40 dark:hover:border-sky-400/40 transition-all duration-300 flex flex-col justify-between">
@@ -37,7 +40,7 @@ export const DemoCard: React.FC<DemoCardProps> = ({ demo }) => {
               {demo.industry}
             </span>
             <h3 className="text-lg sm:text-xl font-extrabold tracking-tight">
-              {demo.businessName}
+              {effectiveBusinessName}
             </h3>
           </div>
         </div>

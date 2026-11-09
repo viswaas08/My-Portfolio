@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { BrandCustomizerProvider } from './context/BrandCustomizerContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -20,10 +21,26 @@ import { ClientOnboardingPage } from './pages/ClientOnboardingPage';
 import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { AdminPricing } from './pages/admin/AdminPricing';
 import { AdminClients } from './pages/admin/AdminClients';
 import { AdminWebsites } from './pages/admin/AdminWebsites';
 import { AdminLeads } from './pages/admin/AdminLeads';
 import { AdminSeo } from './pages/admin/AdminSeo';
+
+// Demo Business Admin (demo-only auth)
+import { DemoAdminLogin } from './pages/admin/demo/DemoAdminLogin';
+import { DemoAdminLayout } from './pages/admin/demo/DemoAdminLayout';
+import { DemoAdminDashboard } from './pages/admin/demo/DemoAdminDashboard';
+import { DemoAdminBusiness } from './pages/admin/demo/DemoAdminBusiness';
+import { DemoAdminMenu } from './pages/admin/demo/DemoAdminMenu';
+import { DemoAdminCategories } from './pages/admin/demo/DemoAdminCategories';
+import { DemoAdminOrders } from './pages/admin/demo/DemoAdminOrders';
+import { DemoAdminTimeSlots } from './pages/admin/demo/DemoAdminTimeSlots';
+import { DemoAdminHours } from './pages/admin/demo/DemoAdminHours';
+import { DemoAdminDelivery } from './pages/admin/demo/DemoAdminDelivery';
+import { DemoAdminWhatsApp } from './pages/admin/demo/DemoAdminWhatsApp';
+import { DemoAdminSeo } from './pages/admin/demo/DemoAdminSeo';
+import { DemoAdminReset } from './pages/admin/demo/DemoAdminReset';
 
 // Demo Pages
 import { RestaurantDemo } from './pages/demos/Restaurant';
@@ -38,7 +55,7 @@ import { ClinicDemo } from './pages/demos/Clinic';
 function AppContent() {
   const location = useLocation();
   const isDemoPage = location.pathname.startsWith('/demos/');
-  const isAdminPage = location.pathname.startsWith('/admin');
+  const isAdminPage = location.pathname.startsWith('/admin') || location.pathname.startsWith('/agency') || location.pathname.startsWith('/demo-admin');
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors overflow-x-hidden w-full relative">
@@ -56,14 +73,44 @@ function AppContent() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/onboarding" element={<ClientOnboardingPage />} />
 
-          {/* Admin Management System */}
+          {/* Master Admin Portal (with Plan Pricing Editor) */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
+            <Route path="pricing" element={<AdminPricing />} />
             <Route path="clients" element={<AdminClients />} />
             <Route path="websites" element={<AdminWebsites />} />
             <Route path="leads" element={<AdminLeads />} />
             <Route path="seo" element={<AdminSeo />} />
+          </Route>
+
+          {/* Legacy / Alias Agency CRM routes */}
+          <Route path="/agency/login" element={<AdminLogin />} />
+          <Route path="/agency" element={<AdminLayout />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="pricing" element={<AdminPricing />} />
+            <Route path="clients" element={<AdminClients />} />
+            <Route path="websites" element={<AdminWebsites />} />
+            <Route path="leads" element={<AdminLeads />} />
+            <Route path="seo" element={<AdminSeo />} />
+          </Route>
+
+          {/* Demo Business Admin Panel (portfolio demo cms) */}
+          <Route path="/demo-admin">
+            <Route index element={<DemoAdminLogin />} />
+            <Route element={<DemoAdminLayout />}>
+              <Route path="dashboard" element={<DemoAdminDashboard />} />
+              <Route path="business" element={<DemoAdminBusiness />} />
+              <Route path="menu" element={<DemoAdminMenu />} />
+              <Route path="categories" element={<DemoAdminCategories />} />
+              <Route path="orders" element={<DemoAdminOrders />} />
+              <Route path="time-slots" element={<DemoAdminTimeSlots />} />
+              <Route path="hours" element={<DemoAdminHours />} />
+              <Route path="delivery" element={<DemoAdminDelivery />} />
+              <Route path="whatsapp" element={<DemoAdminWhatsApp />} />
+              <Route path="seo-settings" element={<DemoAdminSeo />} />
+              <Route path="settings" element={<DemoAdminReset />} />
+            </Route>
           </Route>
 
           {/* 8 Working Business Demos */}
@@ -90,7 +137,9 @@ export function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AppContent />
+        <BrandCustomizerProvider>
+          <AppContent />
+        </BrandCustomizerProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

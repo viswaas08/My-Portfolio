@@ -225,15 +225,48 @@ export class StorageService {
     return localStorage.getItem(AUTH_STORAGE_KEY) === 'true';
   }
 
-  static login(passcode: string): boolean {
-    if (passcode === 'admin2026' || passcode === 'viswaas2026') {
+  static login(identifier: string, secret?: string): boolean {
+    const trimmedId = (identifier || '').trim().toLowerCase();
+    const trimmedSecret = (secret || '').trim();
+
+    // Standard credential check: username = viswaas08@gmail.com, password = vis2007198
+    if (trimmedId === 'viswaas08@gmail.com' && trimmedSecret === 'vis2007198') {
       localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      localStorage.setItem('viswaa_admin_user', JSON.stringify({
+        email: 'viswaas08@gmail.com',
+        name: 'Viswaas',
+        role: 'Master Admin'
+      }));
       return true;
     }
+
+    // Direct password match when only 1 parameter is passed
+    if (!secret && (trimmedId === 'vis2007198' || trimmedId === 'admin2026' || trimmedId === 'viswaas2026')) {
+      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      localStorage.setItem('viswaa_admin_user', JSON.stringify({
+        email: 'viswaas08@gmail.com',
+        name: 'Viswaas',
+        role: 'Master Admin'
+      }));
+      return true;
+    }
+
+    // Also support username without @ if typed loosely e.g. "viswaas08"
+    if (trimmedId === 'viswaas08' && trimmedSecret === 'vis2007198') {
+      localStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      localStorage.setItem('viswaa_admin_user', JSON.stringify({
+        email: 'viswaas08@gmail.com',
+        name: 'Viswaas',
+        role: 'Master Admin'
+      }));
+      return true;
+    }
+
     return false;
   }
 
   static logout() {
     localStorage.removeItem(AUTH_STORAGE_KEY);
+    localStorage.removeItem('viswaa_admin_user');
   }
 }

@@ -14,8 +14,12 @@ import {
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
 import { getWhatsAppUrl } from '../../config/siteConfig';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const TuitionDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const brandName = getBrandName('BrightPath Academy');
   const [enquiryForm, setEnquiryForm] = useState({
     parentName: '',
     studentName: '',
@@ -61,12 +65,14 @@ export const TuitionDemo: React.FC = () => {
   };
 
   const handleWhatsAppEnquiry = () => {
-    const msg = `Hi BrightPath Academy, I would like to enquire about admission:\n- Parent: ${enquiryForm.parentName}\n- Student: ${enquiryForm.studentName}\n- Grade: ${enquiryForm.grade}\n- Subjects: ${enquiryForm.stream}\n- Phone: ${enquiryForm.phone}`;
+    const msg = `Hi ${brandName}, I would like to enquire about admission:\n- Parent: ${enquiryForm.parentName}\n- Student: ${enquiryForm.studentName}\n- Grade: ${enquiryForm.grade}\n- Subjects: ${enquiryForm.stream}\n- Phone: ${enquiryForm.phone}`;
     window.open(getWhatsAppUrl(msg), '_blank');
   };
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans pb-28">
+      <BrandCustomizerBar businessType="Tuition Centre" defaultBrandName="BrightPath Academy" />
+
       {/* Academy Header */}
       <header className="sticky top-0 z-30 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -76,7 +82,7 @@ export const TuitionDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-tight text-white">
-                BRIGHTPATH ACADEMY
+                {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-blue-400 font-semibold uppercase tracking-wider">
                 Excellence in Tuition & Board Prep
@@ -340,7 +346,7 @@ export const TuitionDemo: React.FC = () => {
       </section>
 
       <DemoFloatingCTA
-        businessName="BrightPath Academy"
+        businessName={brandName}
         businessType="Tuition Centre"
         recommendedPackage="Business (₹9,999)"
       />

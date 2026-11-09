@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Utensils, 
   Clock, 
@@ -13,157 +13,115 @@ import {
   ChevronRight,
   Flame,
   Coffee,
-  Heart
+  Heart,
+  ShoppingBag,
+  Plus,
+  Minus,
+  CheckCircle2
 } from 'lucide-react';
 import { DemoFloatingCTA } from '../../components/DemoFloatingCTA';
-import { getWhatsAppUrl } from '../../config/siteConfig';
-
-interface MenuItem {
-  id: string;
-  name: string;
-  category: 'Starters' | 'Main Course' | 'Biryani' | 'Dosa' | 'Breads' | 'Desserts' | 'Beverages';
-  price: number;
-  description: string;
-  isVeg: boolean;
-  isSpecial?: boolean;
-  image: string;
-}
-
-const menuItems: MenuItem[] = [
-  {
-    id: 's1',
-    name: 'Chettinad Kozhi Varuval',
-    category: 'Starters',
-    price: 280,
-    description: 'Crispy fried country chicken tossed with shallots, crushed pepper, and roasted curry leaves.',
-    isVeg: false,
-    isSpecial: true,
-    image: 'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 's2',
-    name: 'Gobi 65 & Curry Leaves',
-    category: 'Starters',
-    price: 190,
-    description: 'Golden cauliflower florets marinated in spiced curd batter and flash-fried with green chilies.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'b1',
-    name: 'Thalassery Mutton Dum Biryani',
-    category: 'Biryani',
-    price: 380,
-    description: 'Fragrant Jeerakasala rice layered with tender mutton chunks, ghee, fried onions, and dry fruits.',
-    isVeg: false,
-    isSpecial: true,
-    image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'b2',
-    name: 'Dindigul Thalappakatti Chicken Biryani',
-    category: 'Biryani',
-    price: 320,
-    description: 'Seeraga samba rice cooked with stone-ground spices and succulent tender chicken cuts.',
-    isVeg: false,
-    image: 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'd1',
-    name: 'Mysore Masala Dosa',
-    category: 'Dosa',
-    price: 150,
-    description: 'Crispy golden crepe smeared with spicy red chutney and stuffed with spiced potato masala.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'd2',
-    name: 'Madurai Kari Dosa (Mutton)',
-    category: 'Dosa',
-    price: 260,
-    description: 'Thick spongy dosa layered with fluffy egg omlette and rich spicy minced mutton gravy.',
-    isVeg: false,
-    isSpecial: true,
-    image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'm1',
-    name: 'Meen Pollichathu (Pearl Spot)',
-    category: 'Main Course',
-    price: 420,
-    description: 'Fresh fish marinated in fiery shallot paste, wrapped in banana leaf and slow-griddled.',
-    isVeg: false,
-    isSpecial: true,
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'm2',
-    name: 'Paneer Butter Masala',
-    category: 'Main Course',
-    price: 240,
-    description: 'Fresh malai paneer cubes simmered in a velvety tomato and cashew cream gravy.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'br1',
-    name: 'Malabar Porotta (2 pcs)',
-    category: 'Breads',
-    price: 70,
-    description: 'Multi-layered flaky Kerala bread griddled on cast iron with pure ghee.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'des1',
-    name: 'Elaneer Payasam (Tender Coconut)',
-    category: 'Desserts',
-    price: 130,
-    description: 'Creamy coconut milk kheer enriched with tender coconut pulp and cardamom.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 'bev1',
-    name: 'Kumbakonam Degree Filter Coffee',
-    category: 'Beverages',
-    price: 60,
-    description: 'Authentic South Indian chicory-blend coffee brewed with foaming fresh cow milk.',
-    isVeg: true,
-    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
-  },
-];
+import { DemoConfigStore, BusinessDemoStore, MenuItemConfig } from '../../services/demoConfigStore';
+import { FoodOrderingModal, CartItem } from '../../components/ordering/FoodOrderingModal';
+import { BrandCustomizerBar } from '../../components/BrandCustomizerBar';
+import { useBrandCustomizer } from '../../context/BrandCustomizerContext';
 
 export const RestaurantDemo: React.FC = () => {
+  const { getBrandName } = useBrandCustomizer();
+  const [store, setStore] = useState<BusinessDemoStore>(DemoConfigStore.getStore('restaurant'));
+  const currentBrandName = getBrandName(store.business.name);
   const [activeCategory, setActiveCategory] = useState<string>('All');
+  
+  // Cart state
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isOrderingModalOpen, setIsOrderingModalOpen] = useState(false);
+
+  // Table reservation form state
   const [tableForm, setTableForm] = useState({
     name: '',
     phone: '',
     guests: '2 Guests',
-    date: '',
-    time: '07:30 PM',
+    date: DemoConfigStore.getIstDateString(),
+    time: '07:30 PM IST',
   });
   const [tableBooked, setTableBooked] = useState(false);
 
-  const categories = ['All', 'Starters', 'Biryani', 'Dosa', 'Main Course', 'Breads', 'Desserts', 'Beverages'];
+  // Synchronize live with DemoConfigStore
+  useEffect(() => {
+    const handleUpdate = () => {
+      const current = DemoConfigStore.getStore('restaurant');
+      setStore(current);
+    };
+    window.addEventListener('demo_config_changed', handleUpdate);
+    return () => window.removeEventListener('demo_config_changed', handleUpdate);
+  }, []);
+
+  const categories = ['All', ...store.categories];
 
   const filteredItems = activeCategory === 'All'
-    ? menuItems
-    : menuItems.filter((i) => i.category === activeCategory);
+    ? store.menu
+    : store.menu.filter((i) => i.category === activeCategory);
 
-  const handleOrderWhatsApp = (dishName: string, price: number) => {
-    const msg = `Hi Spice Route Restaurant, I would like to order: *${dishName}* (₹${price}) for takeaway.`;
-    window.open(getWhatsAppUrl(msg), '_blank');
+  // Cart operations
+  const handleAddToCart = (item: MenuItemConfig) => {
+    if (!item.isAvailable) return;
+    setCart(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) {
+        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i);
+      }
+      return [...prev, {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: 1,
+        image: item.image,
+        category: item.category
+      }];
+    });
+  };
+
+  const handleUpdateQuantity = (id: string, delta: number) => {
+    setCart(prev => {
+      return prev.map(i => {
+        if (i.id === id) {
+          const newQty = i.quantity + delta;
+          return newQty > 0 ? { ...i, quantity: newQty } : null;
+        }
+        return i;
+      }).filter(Boolean) as CartItem[];
+    });
+  };
+
+  const handleRemoveItem = (id: string) => {
+    setCart(prev => prev.filter(i => i.id !== id));
+  };
+
+  const handleClearCart = () => {
+    setCart([]);
+  };
+
+  const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleDirectWhatsAppOrder = (dishName: string, price: number) => {
+    const targetPhone = store.business.whatsappNumber.replace(/[^0-9]/g, '');
+    const msg = `Hello *${currentBrandName}*,\n\nI would like to order: *${dishName}* (₹${price}) for takeaway.\nPlease confirm availability.\n\nThank you!`;
+    window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   const handleTableSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setTableBooked(true);
+    // Prepare WhatsApp reservation request
+    const targetPhone = store.business.whatsappNumber.replace(/[^0-9]/g, '');
+    const msg = `Hello *${currentBrandName}*,\n\nI would like to reserve a table for dining:\n\n*Name:* ${tableForm.name}\n*Phone:* ${tableForm.phone}\n*Guests:* ${tableForm.guests}\n*Date:* ${tableForm.date}\n*Time:* ${tableForm.time}\n\nPlease confirm availability. Thank you!`;
+    window.open(`https://wa.me/${targetPhone}?text=${encodeURIComponent(msg)}`, '_blank');
   };
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans pb-28">
+    <div className="min-h-screen bg-stone-950 text-stone-100 font-sans pb-32">
+      <BrandCustomizerBar businessType="Restaurant" defaultBrandName={store.business.name} />
+
       {/* Restaurant Header */}
       <header className="sticky top-0 z-30 bg-stone-950/90 backdrop-blur-md border-b border-amber-900/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
@@ -173,10 +131,10 @@ export const RestaurantDemo: React.FC = () => {
             </div>
             <div>
               <span className="font-extrabold text-xl tracking-wider text-amber-400 font-serif">
-                SPICE ROUTE
+                {currentBrandName.toUpperCase()}
               </span>
               <span className="text-[10px] block text-stone-400 tracking-widest uppercase">
-                South Indian Heritage Cuisine
+                {store.business.tagline}
               </span>
             </div>
           </div>
@@ -189,9 +147,20 @@ export const RestaurantDemo: React.FC = () => {
           </nav>
 
           <div className="flex items-center gap-3">
+            {/* View Cart Button */}
+            {totalCartCount > 0 && (
+              <button
+                onClick={() => setIsOrderingModalOpen(true)}
+                className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-emerald-600/20 transition cursor-pointer"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Cart ({totalCartCount}) • ₹{cartSubtotal}</span>
+              </button>
+            )}
+
             <a
               href="#reserve"
-              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition shadow-md shadow-amber-500/20"
+              className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 text-xs font-bold transition shadow-md shadow-amber-500/20 hidden sm:inline-block"
             >
               Book a Table
             </a>
@@ -208,7 +177,7 @@ export const RestaurantDemo: React.FC = () => {
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider">
                 <Flame className="w-3.5 h-3.5" />
-                <span>Wood-Fired & Stone-Ground Flavours</span>
+                <span>{store.business.tagline}</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white font-serif leading-tight">
@@ -217,7 +186,7 @@ export const RestaurantDemo: React.FC = () => {
               </h1>
 
               <p className="text-stone-300 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Experience heritage Chettinad, Malabar, and Kongu recipes cooked with hand-pounded spices, cold-pressed oils, and traditional slow-dum techniques.
+                {store.business.description}
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
@@ -227,12 +196,13 @@ export const RestaurantDemo: React.FC = () => {
                 >
                   View Digital Menu
                 </a>
-                <a
-                  href="#reserve"
-                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-stone-700 bg-stone-900 hover:bg-stone-800 text-stone-200 font-bold text-sm transition text-center"
+                <button
+                  onClick={() => setIsOrderingModalOpen(true)}
+                  className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm transition shadow-lg shadow-emerald-600/20 text-center flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  Book a Table
-                </a>
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Order Online (WhatsApp)</span>
+                </button>
               </div>
 
               {/* Trust counters */}
@@ -244,7 +214,7 @@ export const RestaurantDemo: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-emerald-400" />
-                  <span>Open: 11:30 AM – 11:00 PM</span>
+                  <span>All times in IST (Asia/Kolkata)</span>
                 </div>
               </div>
             </div>
@@ -254,7 +224,7 @@ export const RestaurantDemo: React.FC = () => {
               <div className="rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl shadow-amber-500/10 relative group">
                 <img
                   src="https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80"
-                  alt="Thalassery Mutton Dum Biryani"
+                  alt="Special Signature Dish"
                   className="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />
@@ -264,17 +234,20 @@ export const RestaurantDemo: React.FC = () => {
                       Chef's Signature
                     </span>
                     <h4 className="text-white font-bold text-sm sm:text-base">
-                      Thalassery Mutton Dum Biryani
+                      {store.menu[0]?.name || 'Chicken Biryani'}
                     </h4>
                     <span className="text-xs text-stone-400">Slow-cooked in clay pots</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-lg font-black text-amber-400">₹380</span>
+                    <span className="text-lg font-black text-amber-400">₹{store.menu[0]?.price || 220}</span>
                     <button
-                      onClick={() => handleOrderWhatsApp('Thalassery Mutton Dum Biryani', 380)}
-                      className="block mt-1 text-[11px] px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold hover:bg-emerald-500 transition"
+                      onClick={() => {
+                        if (store.menu[0]) handleAddToCart(store.menu[0]);
+                        setIsOrderingModalOpen(true);
+                      }}
+                      className="block mt-1 text-[11px] px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold hover:bg-emerald-500 transition cursor-pointer"
                     >
-                      WhatsApp
+                      Order Now
                     </button>
                   </div>
                 </div>
@@ -302,7 +275,7 @@ export const RestaurantDemo: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {menuItems.filter(i => i.isSpecial).map((dish) => (
+            {store.menu.filter(i => i.isPopular).slice(0, 4).map((dish) => (
               <div key={dish.id} className="rounded-2xl bg-stone-900 border border-stone-800 overflow-hidden hover:border-amber-500/40 transition flex flex-col justify-between">
                 <div className="relative h-44 overflow-hidden">
                   <img src={dish.image} alt={dish.name} className="w-full h-full object-cover" />
@@ -316,13 +289,24 @@ export const RestaurantDemo: React.FC = () => {
                 <div className="p-4 space-y-2">
                   <h4 className="font-bold text-white text-sm line-clamp-1">{dish.name}</h4>
                   <p className="text-xs text-stone-400 line-clamp-2 leading-relaxed">{dish.description}</p>
-                  <button
-                    onClick={() => handleOrderWhatsApp(dish.name, dish.price)}
-                    className="w-full mt-2 inline-flex items-center justify-center gap-1.5 py-2 rounded-xl bg-stone-800 hover:bg-emerald-600 text-stone-200 hover:text-white text-xs font-bold transition"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    <span>Order on WhatsApp</span>
-                  </button>
+                  
+                  <div className="pt-2 flex items-center gap-2">
+                    <button
+                      onClick={() => handleAddToCart(dish)}
+                      disabled={!dish.isAvailable}
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 disabled:opacity-50 text-stone-950 text-xs font-bold transition cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>{dish.isAvailable ? 'Add to Cart' : 'Sold Out'}</span>
+                    </button>
+                    <button
+                      onClick={() => handleDirectWhatsAppOrder(dish.name, dish.price)}
+                      title="Quick WhatsApp Order"
+                      className="p-2 rounded-xl bg-stone-800 hover:bg-emerald-600 text-stone-300 hover:text-white transition"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -364,90 +348,125 @@ export const RestaurantDemo: React.FC = () => {
 
           {/* Menu Items Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="rounded-2xl bg-stone-900/80 border border-stone-800 p-4 flex gap-4 hover:border-amber-500/40 transition group"
-              >
-                <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0 relative bg-stone-950">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition"
-                  />
-                  <span
-                    className={`absolute bottom-1 right-1 w-3 h-3 rounded-full border-2 border-stone-900 ${
-                      item.isVeg ? 'bg-emerald-500' : 'bg-rose-500'
-                    }`}
-                  />
-                </div>
-
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-1">
-                      <h4 className="font-bold text-white text-sm leading-snug">
-                        {item.name}
-                      </h4>
-                      <span className="text-amber-400 font-extrabold text-sm shrink-0">
-                        ₹{item.price}
-                      </span>
-                    </div>
-                    <p className="text-[11px] text-stone-400 mt-1 line-clamp-2 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  <div className="pt-2 flex items-center justify-between">
-                    <span className="text-[10px] text-stone-400 font-medium">
-                      {item.category}
+            {filteredItems.map((item) => {
+              const inCart = cart.find(c => c.id === item.id);
+              return (
+                <div
+                  key={item.id}
+                  className={`rounded-2xl bg-stone-900/80 border p-4 flex gap-4 transition group ${
+                    item.isAvailable
+                      ? 'border-stone-800 hover:border-amber-500/40 hover:bg-stone-900'
+                      : 'border-stone-800/40 opacity-60'
+                  }`}
+                >
+                  <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shrink-0">
+                    <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-105 transition" />
+                    <span className={`absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold ${item.isVeg ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white'}`}>
+                      {item.isVeg ? 'VEG' : 'NON-VEG'}
                     </span>
-                    <button
-                      onClick={() => handleOrderWhatsApp(item.name, item.price)}
-                      className="inline-flex items-center gap-1 text-[11px] text-emerald-400 hover:text-emerald-300 font-bold"
-                    >
-                      <MessageSquare className="w-3 h-3" />
-                      <span>Takeaway</span>
-                    </button>
+                  </div>
+
+                  <div className="flex-1 flex flex-col justify-between space-y-2">
+                    <div>
+                      <div className="flex items-start justify-between gap-1">
+                        <h4 className="font-bold text-white text-sm sm:text-base leading-snug">
+                          {item.name}
+                        </h4>
+                        <span className="font-extrabold text-amber-400 text-sm whitespace-nowrap">
+                          ₹{item.price}
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-400 line-clamp-2 mt-1 leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      {item.isAvailable ? (
+                        <>
+                          {inCart ? (
+                            <div className="flex items-center gap-2 bg-stone-800 p-1 rounded-xl">
+                              <button
+                                onClick={() => handleUpdateQuantity(item.id, -1)}
+                                className="p-1 rounded-lg text-stone-300 hover:bg-stone-700"
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <span className="text-xs font-bold w-5 text-center text-amber-400">
+                                {inCart.quantity}
+                              </span>
+                              <button
+                                onClick={() => handleUpdateQuantity(item.id, 1)}
+                                className="p-1 rounded-lg text-stone-300 hover:bg-stone-700"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => handleAddToCart(item)}
+                              className="px-3 py-1.5 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 border border-amber-500/20 text-xs font-bold transition flex items-center gap-1 cursor-pointer"
+                            >
+                              <Plus className="w-3.5 h-3.5" />
+                              <span>Add</span>
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => handleDirectWhatsAppOrder(item.name, item.price)}
+                            className="text-stone-400 hover:text-emerald-400 p-1 text-xs flex items-center gap-1"
+                            title="Direct WhatsApp Order"
+                          >
+                            <MessageSquare className="w-3.5 h-3.5" />
+                          </button>
+                        </>
+                      ) : (
+                        <span className="text-[11px] font-bold text-rose-400">
+                          Currently Unavailable
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Book a Table & Hours Section */}
-      <section id="reserve" className="py-16 bg-stone-900/60 border-t border-stone-800">
+      {/* Table Reservation & Opening Hours Section */}
+      <section id="reserve" className="py-16 sm:py-20 bg-stone-900/60 border-t border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-            {/* Table Reservation Form */}
-            <div className="lg:col-span-6 rounded-3xl bg-stone-900 border border-stone-800 p-6 sm:p-8 space-y-5">
-              <div className="space-y-1">
-                <span className="text-xs uppercase font-bold tracking-wider text-amber-400">
-                  Reservations
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+            
+            {/* Table Booking Form */}
+            <div className="lg:col-span-6 rounded-3xl bg-stone-900 border border-stone-800 p-6 sm:p-8 space-y-6">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest text-amber-400">
+                  Dine In With Us
                 </span>
-                <h3 className="text-2xl font-bold text-white font-serif">
-                  Book a Table
+                <h3 className="text-2xl sm:text-3xl font-black text-white font-serif mt-1">
+                  Reserve a Table
                 </h3>
-                <p className="text-xs text-stone-400">
-                  Complimentary booking • No cancellation fees • Special seating available for family dinners.
+                <p className="text-stone-400 text-xs sm:text-sm mt-1">
+                  Book in advance to ensure preferred seating for family gatherings and weekend dining.
                 </p>
               </div>
 
               {tableBooked ? (
-                <div className="p-6 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-3">
-                  <span className="w-12 h-12 rounded-full bg-amber-500 text-stone-950 flex items-center justify-center mx-auto font-black text-lg">
+                <div className="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-800/80 text-center space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto text-xl">
                     ✓
-                  </span>
-                  <h4 className="font-bold text-white text-base">Reservation Request Sent!</h4>
+                  </div>
+                  <h4 className="font-extrabold text-white text-base">Reservation Request Sent!</h4>
                   <p className="text-xs text-stone-300">
-                    We will send an instant SMS confirmation to <strong>{tableForm.phone || '+91 98765 43210'}</strong> for {tableForm.guests} at {tableForm.time}.
+                    Your table booking request was opened in WhatsApp for <strong>{tableForm.name}</strong> ({tableForm.guests}). Our team will confirm shortly.
                   </p>
                   <button
                     onClick={() => setTableBooked(false)}
-                    className="text-xs text-amber-400 underline font-semibold"
+                    className="text-xs text-amber-400 hover:underline font-bold"
                   >
-                    Make another reservation
+                    Make another booking
                   </button>
                 </div>
               ) : (
@@ -455,28 +474,28 @@ export const RestaurantDemo: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-stone-300 mb-1">
-                        Your Name
+                        Full Name
                       </label>
                       <input
                         type="text"
                         required
+                        placeholder="e.g. Arun Kumar"
                         value={tableForm.name}
                         onChange={(e) => setTableForm({ ...tableForm, name: e.target.value })}
-                        placeholder="Ramesh Sharma"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-hidden focus:border-amber-400"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-stone-300 mb-1">
-                        Phone / WhatsApp
+                        WhatsApp Number
                       </label>
                       <input
                         type="tel"
                         required
+                        placeholder="e.g. 98430 12345"
                         value={tableForm.phone}
                         onChange={(e) => setTableForm({ ...tableForm, phone: e.target.value })}
-                        placeholder="+91 98765 43210"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-hidden focus:border-amber-400"
                       />
                     </div>
                   </div>
@@ -484,17 +503,18 @@ export const RestaurantDemo: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-xs font-semibold text-stone-300 mb-1">
-                        Party Size
+                        Number of Guests
                       </label>
                       <select
                         value={tableForm.guests}
                         onChange={(e) => setTableForm({ ...tableForm, guests: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-hidden focus:border-amber-400"
                       >
+                        <option value="1 Guest">1 Guest</option>
                         <option value="2 Guests">2 Guests</option>
                         <option value="4 Guests">4 Guests</option>
                         <option value="6 Guests">6 Guests</option>
-                        <option value="8+ Family Table">8+ Family Table</option>
+                        <option value="8+ Guests">8+ Guests</option>
                       </select>
                     </div>
                     <div>
@@ -506,24 +526,19 @@ export const RestaurantDemo: React.FC = () => {
                         required
                         value={tableForm.date}
                         onChange={(e) => setTableForm({ ...tableForm, date: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-hidden focus:border-amber-400"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-semibold text-stone-300 mb-1">
-                        Preferred Time
+                        Time Slot (IST)
                       </label>
-                      <select
+                      <input
+                        type="text"
                         value={tableForm.time}
                         onChange={(e) => setTableForm({ ...tableForm, time: e.target.value })}
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-base sm:text-xs focus:outline-none focus:border-amber-400"
-                      >
-                        <option value="12:30 PM">12:30 PM (Lunch)</option>
-                        <option value="01:30 PM">01:30 PM (Lunch)</option>
-                        <option value="07:30 PM">07:30 PM (Dinner)</option>
-                        <option value="08:30 PM">08:30 PM (Dinner)</option>
-                        <option value="09:30 PM">09:30 PM (Dinner)</option>
-                      </select>
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-stone-950 border border-stone-700 text-white text-xs focus:outline-hidden focus:border-amber-400"
+                      />
                     </div>
                   </div>
 
@@ -531,7 +546,7 @@ export const RestaurantDemo: React.FC = () => {
                     type="submit"
                     className="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-black text-xs uppercase tracking-wider transition cursor-pointer"
                   >
-                    Confirm Table Reservation
+                    Confirm Table Reservation on WhatsApp
                   </button>
                 </form>
               )}
@@ -542,21 +557,17 @@ export const RestaurantDemo: React.FC = () => {
               <div className="rounded-3xl bg-stone-900 border border-stone-800 p-6 sm:p-8 space-y-4">
                 <div className="flex items-center gap-2 text-amber-400">
                   <Clock className="w-5 h-5" />
-                  <h4 className="font-bold text-white text-lg">Opening Hours</h4>
+                  <h4 className="font-bold text-white text-lg">Opening Hours (IST)</h4>
                 </div>
                 <div className="space-y-2 text-xs sm:text-sm text-stone-300 divide-y divide-stone-800">
-                  <div className="flex justify-between py-1.5">
-                    <span>Monday – Friday (Lunch)</span>
-                    <strong className="text-white">11:30 AM – 03:30 PM</strong>
-                  </div>
-                  <div className="flex justify-between py-1.5">
-                    <span>Monday – Friday (Dinner)</span>
-                    <strong className="text-white">06:30 PM – 11:00 PM</strong>
-                  </div>
-                  <div className="flex justify-between py-1.5">
-                    <span>Saturday & Sunday</span>
-                    <strong className="text-amber-400">11:00 AM – 11:30 PM (Non-stop)</strong>
-                  </div>
+                  {store.hours.map((h) => (
+                    <div key={h.day} className="flex justify-between py-1.5">
+                      <span>{h.day}</span>
+                      <strong className={h.isClosed ? 'text-red-400' : 'text-white'}>
+                        {h.isClosed ? 'Closed' : h.shifts.map(s => `${s.open} - ${s.close}`).join(' & ')}
+                      </strong>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -566,11 +577,11 @@ export const RestaurantDemo: React.FC = () => {
                   <h4 className="font-bold text-white text-lg">Location & Directions</h4>
                 </div>
                 <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                  #42 Heritage Boulevard, Near Cross Cut Junction, R.S. Puram, Coimbatore, Tamil Nadu 641002.
+                  {store.business.address}
                 </p>
                 <div className="pt-2 flex items-center gap-3">
                   <a
-                    href="https://maps.google.com"
+                    href={store.business.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-stone-800 hover:bg-stone-700 text-white text-xs font-semibold border border-stone-700 transition"
@@ -579,11 +590,11 @@ export const RestaurantDemo: React.FC = () => {
                     Open in Google Maps
                   </a>
                   <a
-                    href="tel:+916382450849"
+                    href={`tel:${store.business.phone.replace(/[^0-9+]/g, '')}`}
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 text-xs font-semibold border border-amber-500/20 transition"
                   >
                     <Phone className="w-3.5 h-3.5" />
-                    Call Dining Desk
+                    Call Restaurant
                   </a>
                 </div>
               </div>
@@ -592,9 +603,41 @@ export const RestaurantDemo: React.FC = () => {
         </div>
       </section>
 
+      {/* Floating Bottom Cart Bar (if items in cart) */}
+      {totalCartCount > 0 && (
+        <div className="fixed bottom-20 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-40 animate-slideUp">
+          <button
+            onClick={() => setIsOrderingModalOpen(true)}
+            className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-sm flex items-center justify-between sm:justify-center gap-4 shadow-2xl shadow-emerald-600/40 border border-emerald-400/30 transition cursor-pointer"
+          >
+            <div className="flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5" />
+              <span>{totalCartCount} {totalCartCount === 1 ? 'item' : 'items'} in Cart</span>
+            </div>
+            <span className="px-2.5 py-1 rounded-xl bg-emerald-700 font-mono text-sm">
+              ₹{cartSubtotal}
+            </span>
+            <span className="text-xs bg-white text-emerald-950 px-2 py-0.5 rounded-lg font-black uppercase">
+              Checkout &rarr;
+            </span>
+          </button>
+        </div>
+      )}
+
+      {/* Reusable Food Ordering Modal */}
+      <FoodOrderingModal
+        isOpen={isOrderingModalOpen}
+        onClose={() => setIsOrderingModalOpen(false)}
+        businessId="restaurant"
+        cart={cart}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onClearCart={handleClearCart}
+      />
+
       {/* Floating Demo Conversion CTA */}
       <DemoFloatingCTA
-        businessName="Spice Route Restaurant"
+        businessName={currentBrandName}
         businessType="Restaurant"
         recommendedPackage="Business (₹9,999)"
       />

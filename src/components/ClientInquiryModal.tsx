@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Send, MessageSquare, CheckCircle, Sparkles } from 'lucide-react';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
 import { useLanguage } from '../context/LanguageContext';
+import { PricingService } from '../services/pricingService';
 
 interface ClientInquiryModalProps {
   isOpen: boolean;
@@ -230,9 +231,11 @@ export const ClientInquiryModal: React.FC<ClientInquiryModalProps> = ({
                     onChange={(e) => setFormData({ ...formData, selectedPackage: e.target.value })}
                     className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 text-slate-900 dark:text-white text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
                   >
-                    <option value="Starter (₹4,999)">Starter (₹4,999) — 1–3 Pages</option>
-                    <option value="Business (₹9,999)">Business (₹9,999) — Most Popular</option>
-                    <option value="Pro Web App (₹19,999+)">Pro Web App (₹19,999+) — Custom Software</option>
+                    {PricingService.getPricingTiers().map((t) => (
+                      <option key={t.id} value={`${t.name} (${t.price})`}>
+                        {t.name} ({t.price}) — {t.delivery}
+                      </option>
+                    ))}
                     <option value="Need Advice">{lang === 'ta' ? "ஆலோசனை தேவை / முடிவு செய்யவில்லை" : "Not sure yet / Need recommendation"}</option>
                   </select>
                 </div>

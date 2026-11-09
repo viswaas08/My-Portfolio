@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Sparkles, Layers } from 'lucide-react';
+import { Sparkles, Layers, Store, X, RotateCcw } from 'lucide-react';
 import { demosData } from '../data/demos';
 import { DemoCard } from './DemoCard';
 import { useLanguage } from '../context/LanguageContext';
+import { useBrandCustomizer } from '../context/BrandCustomizerContext';
 
 export const DemosSection: React.FC = () => {
   const { t, lang } = useLanguage();
+  const { customBrandName, setCustomBrandName, resetCustomBrandName } = useBrandCustomizer();
   const [filter, setFilter] = useState<string>('All');
 
   const categories = [
@@ -38,6 +40,36 @@ export const DemosSection: React.FC = () => {
           <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
             {t.demos.subtitle}
           </p>
+
+          {/* Interactive Live Brand Preview Input */}
+          <div className="pt-2 max-w-lg mx-auto">
+            <div className="p-2 sm:p-2.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-sky-500/30 shadow-lg flex items-center gap-2">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white flex items-center justify-center shrink-0">
+                <Store className="w-4 h-4" />
+              </div>
+              <input
+                type="text"
+                value={customBrandName}
+                onChange={(e) => setCustomBrandName(e.target.value)}
+                placeholder={lang === 'ta' ? 'உங்கள் பிராண்ட் பெயரை உள்ளிடுக (உதா: ராயல் பிரியாணி)...' : 'Type your brand name (e.g. Royal Biryani)...'}
+                className="flex-1 bg-transparent text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none"
+              />
+              {customBrandName && (
+                <button
+                  onClick={resetCustomBrandName}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  title="Clear"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+            {customBrandName && (
+              <p className="text-[11px] text-sky-600 dark:text-sky-400 mt-1.5 font-medium">
+                ✨ {lang === 'ta' ? 'அனைத்து மாதிரிகளும் உங்கள் பிராண்டிற்கு மாறின!' : 'Live preview active: All demos updated to your brand!'}
+              </p>
+            )}
+          </div>
 
           {/* Category Filter Pills */}
           <div className="flex items-center sm:justify-center gap-2 pt-4 overflow-x-auto no-scrollbar pb-2 px-1 sm:flex-wrap">

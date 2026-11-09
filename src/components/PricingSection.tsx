@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Check, 
   Sparkles, 
@@ -8,7 +8,8 @@ import {
   ShieldCheck,
   MessageSquare
 } from 'lucide-react';
-import { pricingPackages } from '../data/pricing';
+import { PricingService } from '../services/pricingService';
+import { PricingTier } from '../data/pricing';
 import { useLanguage } from '../context/LanguageContext';
 import { ClientInquiryModal } from './ClientInquiryModal';
 import { getWhatsAppUrl } from '../config/siteConfig';
@@ -16,40 +17,49 @@ import { getWhatsAppUrl } from '../config/siteConfig';
 export const PricingSection: React.FC = () => {
   const { t } = useLanguage();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPkg, setSelectedPkg] = useState<typeof t.pricing.tiers[0]>(t.pricing.tiers[1]);
+  const [tiers, setTiers] = useState<PricingTier[]>(PricingService.getPricingTiers());
+  const [selectedPkg, setSelectedPkg] = useState<PricingTier>(tiers[1] || tiers[0]);
 
-  const handleSelectPackage = (pkg: typeof t.pricing.tiers[0]) => {
+  useEffect(() => {
+    const handleUpdate = () => {
+      setTiers(PricingService.getPricingTiers());
+    };
+    window.addEventListener('pricing_updated', handleUpdate);
+    return () => window.removeEventListener('pricing_updated', handleUpdate);
+  }, []);
+
+  const handleSelectPackage = (pkg: PricingTier) => {
     setSelectedPkg(pkg);
     setModalOpen(true);
   };
 
-  const handleWhatsAppInquiry = (pkg: typeof t.pricing.tiers[0]) => {
-    const url = getWhatsAppUrl(pkg.whatsappMsg);
+  const handleWhatsAppInquiry = (pkg: PricingTier) => {
+    const msg = pkg.whatsappMessage || `Hi Viswaas, I want to choose the ${pkg.name} package (${pkg.price}) for my business website.`;
+    const url = getWhatsAppUrl(msg);
     window.open(url, '_blank');
   };
 
   return (
     <>
-      <section id="pricing" className="py-16 sm:py-24 bg-slate-50/70 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80">
+      <section id="pricing" className="py-12 sm:py-24 bg-slate-50/70 dark:bg-slate-900/40 border-y border-slate-200/80 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+          <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4 mb-10 sm:mb-16">
             <span className="text-xs uppercase font-bold tracking-widest text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
               {t.pricing.badge}
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               {t.pricing.title}
             </h2>
-            <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 text-xs sm:text-base leading-relaxed max-w-xl mx-auto">
               {t.pricing.subtitle}
             </p>
           </div>
 
           {/* Pricing Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-            {t.pricing.tiers.map((pkg, idx) => {
-              const origPkg = pricingPackages[idx] || pricingPackages[0];
-              const isPopular = origPkg.popular;
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+            {tiers.map((pkg) => {
+              const isPopular = pkg.popular;
               return (
                 <div
                   key={pkg.id}
@@ -67,17 +77,17 @@ export const PricingSection: React.FC = () => {
                     </div>
                   )}
 
-                  <div className="space-y-6">
+                  <div className="space-y-5 sm:space-y-6">
                     {/* Package Head */}
                     <div>
-                      <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                         {pkg.name}
                       </h3>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 sm:min-h-[32px]">
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 min-h-[30px]">
                         {pkg.tagline}
                       </p>
-                      <div className="mt-4 flex items-baseline gap-1">
-                        <span className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+                      <div className="mt-4 flex items-baseline gap-1.5">
+                        <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white">
                           {pkg.price}
                         </span>
                         <span className="text-xs text-slate-500 dark:text-slate-400">
@@ -87,7 +97,7 @@ export const PricingSection: React.FC = () => {
                     </div>
 
                     {/* Best for description */}
-                    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">
+                    <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                       <strong className="text-slate-900 dark:text-white">{t.pricing.bestForLabel}</strong>{' '}
                       {pkg.bestFor}
                     </div>
@@ -121,22 +131,22 @@ export const PricingSection: React.FC = () => {
                   </div>
 
                   {/* Bottom CTA actions */}
-                  <div className="pt-8 mt-8 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
+                  <div className="pt-6 sm:pt-8 mt-6 sm:mt-8 border-t border-slate-100 dark:border-slate-800 space-y-2.5">
                     <button
                       onClick={() => handleSelectPackage(pkg)}
-                      className={`w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm transition cursor-pointer ${
+                      className={`w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm transition cursor-pointer active:scale-98 ${
                         isPopular
                           ? 'bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white shadow-lg shadow-sky-500/25'
                           : 'bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600 text-white'
                       }`}
                     >
-                      <span>{pkg.ctaText}</span>
+                      <span>{pkg.ctaText || `Choose ${pkg.name}`}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
 
                     <button
                       onClick={() => handleWhatsAppInquiry(pkg)}
-                      className="w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-1.5 py-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
                       <span>{t.pricing.whatsappInquiry}</span>
@@ -148,7 +158,7 @@ export const PricingSection: React.FC = () => {
           </div>
 
           {/* Pricing Transparent Notice */}
-          <div className="mt-14 max-w-3xl mx-auto rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 p-6 sm:p-7 shadow-sm space-y-3">
+          <div className="mt-10 sm:mt-14 max-w-3xl mx-auto rounded-3xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 p-5 sm:p-7 shadow-sm space-y-3">
             <div className="flex items-center gap-2.5 text-slate-900 dark:text-white font-bold text-sm sm:text-base">
               <ShieldCheck className="w-5 h-5 text-sky-500 shrink-0" />
               <span>{t.pricing.noticeTitle}</span>

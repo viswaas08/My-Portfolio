@@ -20,6 +20,7 @@ import {
 import { BusinessType, MaintenancePlanId, ClientRecord } from '../types/agency';
 import { agencyPricing, maintenancePlans } from '../config/agencyConfig';
 import { StorageService } from '../services/storageService';
+import { PricingService } from '../services/pricingService';
 import { getWhatsAppUrl } from '../config/siteConfig';
 
 export const ClientOnboardingPage: React.FC = () => {
@@ -68,13 +69,16 @@ export const ClientOnboardingPage: React.FC = () => {
     specialRequirements: ''
   });
 
-  // Calculate pricing
+  // Dynamic pricing from PricingService
+  const liveTiers = PricingService.getPricingTiers();
+  const liveMaintPlans = PricingService.getMaintenancePlans();
+  const activeLiveTier = liveTiers.find(t => t.id === formData.selectedPackage);
   const pkgConfig = agencyPricing[formData.selectedPackage];
-  const totalPrice = pkgConfig.numericPrice;
+  const totalPrice = activeLiveTier?.numericPrice ?? pkgConfig.numericPrice;
   const advanceAmount = Math.floor(totalPrice / 2);
   const remainingAmount = totalPrice - advanceAmount;
 
-  const selectedMaintenancePlan = maintenancePlans.find(p => p.id === formData.selectedMaintenance);
+  const selectedMaintenancePlan = liveMaintPlans.find(p => p.id === formData.selectedMaintenance) || maintenancePlans.find(p => p.id === formData.selectedMaintenance);
   const monthlyMaintenancePrice = selectedMaintenancePlan?.numericMonthlyPrice || 0;
 
   const businessTypes: BusinessType[] = [
@@ -514,7 +518,9 @@ Hi Viswaas, I have completed the website onboarding form and would like to confi
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {(['starter', 'business', 'pro-web-app'] as const).map((pkgKey) => {
                     const pkg = agencyPricing[pkgKey];
+                    const matchedLive = liveTiers.find(t => t.id === pkgKey);
                     const isSelected = formData.selectedPackage === pkgKey;
+                    const displayPrice = matchedLive?.price || pkg.price;
                     return (
                       <div
                         key={pkgKey}
@@ -528,7 +534,7 @@ Hi Viswaas, I have completed the website onboarding form and would like to confi
                         <div className="space-y-2">
                           <div className="flex items-center justify-between">
                             <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">
-                              {pkg.name}
+                              {matchedLive?.name || pkg.name}
                             </h4>
                             {'popular' in pkg && pkg.popular && (
                               <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-sky-500 text-white">
@@ -537,7 +543,7 @@ Hi Viswaas, I have completed the website onboarding form and would like to confi
                             )}
                           </div>
                           <div className="text-xl font-black text-slate-900 dark:text-white font-mono">
-                            {pkg.price}
+                            {displayPrice}
                           </div>
                           <p className="text-[11px] text-slate-500 dark:text-slate-400">
                             {pkg.pages} • {pkg.target}
