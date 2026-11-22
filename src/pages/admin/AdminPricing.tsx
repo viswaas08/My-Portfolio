@@ -474,7 +474,6 @@ export const AdminPricing: React.FC = () => {
                     starting price
                   </span>
                 </div>
-              </div>
 
               {/* Best for */}
               <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-xs text-slate-300">
