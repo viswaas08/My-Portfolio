@@ -99,9 +99,22 @@ export const AdminLogin: React.FC = () => {
 
           {/* Admin Password */}
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5 uppercase tracking-wider flex items-center justify-between">
-              <span>Admin Password</span>
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                Admin Password
+              </label>
+              <button
+                type="button"
+                onClick={() => {
+                  setEmail('viswaas08@gmail.com');
+                  setPassword('vis2007198');
+                  setError('');
+                }}
+                className="text-[10px] text-sky-400 hover:text-sky-300 underline font-medium cursor-pointer"
+              >
+                Autofill Credentials
+              </button>
+            </div>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}

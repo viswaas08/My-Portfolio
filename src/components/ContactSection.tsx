@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Send, 
   MessageSquare, 
@@ -11,10 +11,20 @@ import {
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './Icons';
 import { siteConfig, getWhatsAppUrl } from '../config/siteConfig';
+import { SiteSettingsService } from '../services/siteSettingsService';
 import { useLanguage } from '../context/LanguageContext';
 
 export const ContactSection: React.FC = () => {
   const { t, lang } = useLanguage();
+  const [siteSettings, setSiteSettings] = useState(SiteSettingsService.getSettings());
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setSiteSettings(SiteSettingsService.getSettings());
+    };
+    window.addEventListener('site_settings_updated', handleUpdate);
+    return () => window.removeEventListener('site_settings_updated', handleUpdate);
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -92,7 +102,7 @@ export const ContactSection: React.FC = () => {
               </a>
 
               <a
-                href={`mailto:${siteConfig.contact.email}`}
+                href={`mailto:${siteSettings.contact.email || siteConfig.contact.email}`}
                 className="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700/80 shadow-sm flex items-center justify-between hover:border-sky-500/50 hover:shadow-md transition group"
               >
                 <div className="flex items-center gap-3.5">
@@ -104,7 +114,7 @@ export const ContactSection: React.FC = () => {
                       {t.contact.emailInquiries}
                     </span>
                     <strong className="text-sm text-slate-900 dark:text-white font-semibold">
-                      {siteConfig.contact.email}
+                      {siteSettings.contact.email || siteConfig.contact.email}
                     </strong>
                   </div>
                 </div>
@@ -122,7 +132,7 @@ export const ContactSection: React.FC = () => {
                     {t.contact.baseLocation}
                   </span>
                   <span className="text-sm font-semibold text-slate-900 dark:text-white">
-                    {t.contact.locationVal}
+                    {siteSettings.contact.location || t.contact.locationVal}
                   </span>
                 </div>
               </div>
@@ -133,25 +143,39 @@ export const ContactSection: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
                 {t.contact.devProfiles}
               </span>
-              <div className="flex items-center gap-3">
-                <a
-                  href={siteConfig.contact.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                  <span>GitHub</span>
-                </a>
-                <a
-                  href={siteConfig.contact.linkedinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700 transition"
-                >
-                  <LinkedinIcon className="w-4 h-4 text-blue-500" />
-                  <span>LinkedIn</span>
-                </a>
+              <div className="flex flex-wrap items-center gap-3">
+                {siteSettings.contact.githubUrl && (
+                  <a
+                    href={siteSettings.contact.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:white hover:bg-slate-50 dark:hover:bg-slate-700 transition"
+                  >
+                    <GithubIcon className="w-4 h-4" />
+                    <span>GitHub</span>
+                  </a>
+                )}
+                {siteSettings.contact.linkedinUrl && (
+                  <a
+                    href={siteSettings.contact.linkedinUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:white hover:bg-slate-50 dark:hover:bg-slate-700 transition"
+                  >
+                    <LinkedinIcon className="w-4 h-4 text-blue-500" />
+                    <span>LinkedIn</span>
+                  </a>
+                )}
+                {siteSettings.contact.instagramUrl && (
+                  <a
+                    href={siteSettings.contact.instagramUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-medium text-pink-600 dark:text-pink-400 hover:bg-slate-50 dark:hover:bg-slate-700 transition"
+                  >
+                    <span>Instagram</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

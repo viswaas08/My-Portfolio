@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
@@ -6,19 +6,29 @@ import {
   CheckCircle2, 
   Smartphone, 
   Monitor, 
-  MessageSquare,
-  Star,
-  Clock,
-  MapPin,
-  Utensils
+  MessageSquare, 
+  Star, 
+  Clock, 
+  MapPin, 
+  Utensils 
 } from 'lucide-react';
 import { siteConfig } from '../config/siteConfig';
 import { useLanguage } from '../context/LanguageContext';
+import { SiteSettingsService } from '../services/siteSettingsService';
 import { ClientInquiryModal } from './ClientInquiryModal';
 
 export const Hero: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const { t, lang } = useLanguage();
+  const [heroSettings, setHeroSettings] = useState(SiteSettingsService.getSettings().hero);
+
+  useEffect(() => {
+    const handleUpdate = () => {
+      setHeroSettings(SiteSettingsService.getSettings().hero);
+    };
+    window.addEventListener('site_settings_updated', handleUpdate);
+    return () => window.removeEventListener('site_settings_updated', handleUpdate);
+  }, []);
 
   return (
     <>
@@ -33,20 +43,20 @@ export const Hero: React.FC = () => {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 dark:bg-sky-500/15 border border-sky-500/20 text-sky-700 dark:text-sky-300 text-xs sm:text-sm font-semibold">
                 <Sparkles className="w-3.5 h-3.5 text-sky-500" />
-                <span>{t.hero.badge}</span>
+                <span>{lang === 'en' ? (heroSettings.badge || t.hero.badge) : t.hero.badge}</span>
               </div>
 
               {/* Headline */}
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.14] break-words">
-                {t.hero.headlinePart1}{' '}
+                {lang === 'en' ? (heroSettings.headlinePart1 || t.hero.headlinePart1) : t.hero.headlinePart1}{' '}
                 <span className="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 dark:from-sky-400 dark:via-blue-400 dark:to-indigo-300 bg-clip-text text-transparent">
-                  {t.hero.headlinePart2}
+                  {lang === 'en' ? (heroSettings.headlinePart2 || t.hero.headlinePart2) : t.hero.headlinePart2}
                 </span>
               </h1>
 
               {/* Supporting Text */}
               <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                {t.hero.supporting}
+                {lang === 'en' ? (heroSettings.supporting || t.hero.supporting) : t.hero.supporting}
               </p>
 
               {/* Action Buttons */}
@@ -70,18 +80,28 @@ export const Hero: React.FC = () => {
 
               {/* Trust Line */}
               <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-y-2 gap-x-6 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium">
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust1}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust2}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust3}
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust4}
-                </span>
+                {lang === 'en' && heroSettings.trustPoints?.length ? (
+                  heroSettings.trustPoints.map((pt, pIdx) => (
+                    <span key={pIdx} className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {pt}
+                    </span>
+                  ))
+                ) : (
+                  <>
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust1}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust2}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust3}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-500" /> {t.hero.trust4}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
 

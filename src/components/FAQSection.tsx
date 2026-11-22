@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronDown, HelpCircle, MessageSquare } from 'lucide-react';
 import { getFaqData } from '../data/faq';
 import { getWhatsAppUrl } from '../config/siteConfig';
+import { SiteSettingsService } from '../services/siteSettingsService';
 import { useLanguage } from '../context/LanguageContext';
 
 export const FAQSection: React.FC = () => {
   const { t, lang } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [siteSettings, setSiteSettings] = useState(SiteSettingsService.getSettings());
 
-  const currentFaqData = getFaqData(lang);
+  useEffect(() => {
+    const handleUpdate = () => {
+      setSiteSettings(SiteSettingsService.getSettings());
+    };
+    window.addEventListener('site_settings_updated', handleUpdate);
+    return () => window.removeEventListener('site_settings_updated', handleUpdate);
+  }, []);
+
+  const currentFaqData = (lang === 'en' && siteSettings.faqs && siteSettings.faqs.length > 0)
+    ? siteSettings.faqs
+    : getFaqData(lang);
 
   const toggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);

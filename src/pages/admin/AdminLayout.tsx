@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   IndianRupee, 
+  Settings,
   Users, 
   Globe, 
   TrendingUp, 
@@ -38,6 +39,7 @@ export const AdminLayout: React.FC = () => {
   const navItems = [
     { label: 'Executive Dashboard', path: '/admin', exact: true, icon: LayoutDashboard },
     { label: 'Plan Prices & Packages', path: '/admin/pricing', icon: IndianRupee, badge: 'EDIT' },
+    { label: 'Website Details & Settings', path: '/admin/settings', icon: Settings, badge: 'NEW' },
     { label: 'Client Registry', path: '/admin/clients', icon: Users },
     { label: 'Websites & Hosting', path: '/admin/websites', icon: Globe },
     { label: 'Lead Pipeline', path: '/admin/leads', icon: TrendingUp },

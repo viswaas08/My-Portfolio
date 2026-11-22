@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { StorageService } from '../../services/storageService';
 import { PricingService } from '../../services/pricingService';
+import { SiteSettingsService } from '../../services/siteSettingsService';
 import { ClientRecord } from '../../types/agency';
 import { PricingTier } from '../../data/pricing';
 
@@ -28,11 +29,13 @@ export const AdminDashboard: React.FC = () => {
   const [clients, setClients] = useState<ClientRecord[]>(StorageService.getClients());
   const [copiedBackup, setCopiedBackup] = useState(false);
   const [pricingTiers, setPricingTiers] = useState<PricingTier[]>(PricingService.getPricingTiers());
+  const [siteSettings, setSiteSettings] = useState(SiteSettingsService.getSettings());
 
   const refreshData = () => {
     setMetrics(StorageService.getMetrics());
     setClients(StorageService.getClients());
     setPricingTiers(PricingService.getPricingTiers());
+    setSiteSettings(SiteSettingsService.getSettings());
   };
 
   useEffect(() => {
@@ -247,6 +250,73 @@ export const AdminDashboard: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Website Details & Contact Settings Quick Card */}
+      <div className="rounded-3xl bg-slate-900 border border-slate-800 p-5 sm:p-6 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 font-bold">
+              <Globe className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-white text-base">Public Website Details & Contact Info</h3>
+                <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                  {siteSettings.brand.name}
+                </span>
+              </div>
+              <p className="text-xs text-slate-400">
+                Direct WhatsApp routing, founder email, public address, hero headline, and FAQ content.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/admin/settings"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-bold text-xs uppercase tracking-wider transition border border-slate-700 shrink-0 self-start sm:self-auto cursor-pointer"
+          >
+            <span>Edit Website Details & FAQs</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-1">
+          <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+            <div className="text-[11px] font-bold text-slate-400">WhatsApp Routing</div>
+            <div className="text-xs sm:text-sm font-black text-emerald-400 font-mono truncate">
+              +{siteSettings.contact.whatsappNumber}
+            </div>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+            <div className="text-[11px] font-bold text-slate-400">Public Display Phone</div>
+            <div className="text-xs sm:text-sm font-bold text-white truncate">
+              {siteSettings.contact.phoneDisplay}
+            </div>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+            <div className="text-[11px] font-bold text-slate-400">Primary Email</div>
+            <div className="text-xs sm:text-sm font-bold text-sky-400 truncate">
+              {siteSettings.contact.email}
+            </div>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-0.5">
+            <div className="text-[11px] font-bold text-slate-400">Announcement Banner</div>
+            <div className="text-xs sm:text-sm font-bold truncate">
+              {siteSettings.announcement.enabled ? (
+                <span className="text-emerald-400 flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                  Active on Public Site
+                </span>
+              ) : (
+                <span className="text-slate-500">Disabled</span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

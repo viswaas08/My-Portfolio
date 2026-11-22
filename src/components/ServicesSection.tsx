@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Check, 
@@ -10,6 +10,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { servicesData } from '../data/services';
+import { SiteSettingsService } from '../services/siteSettingsService';
 import { useLanguage } from '../context/LanguageContext';
 import { ClientInquiryModal } from './ClientInquiryModal';
 
@@ -23,12 +24,25 @@ const iconMap: Record<string, React.ElementType> = {
 export const ServicesSection: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<{ title: string; startingPrice: string; idealFor?: string[] } | null>(null);
-  const { t } = useLanguage();
+  const [siteSettings, setSiteSettings] = useState(SiteSettingsService.getSettings());
+  const { t, lang } = useLanguage();
 
-  const handleServiceSelect = (service: typeof t.services.cards[0]) => {
+  useEffect(() => {
+    const handleUpdate = () => {
+      setSiteSettings(SiteSettingsService.getSettings());
+    };
+    window.addEventListener('site_settings_updated', handleUpdate);
+    return () => window.removeEventListener('site_settings_updated', handleUpdate);
+  }, []);
+
+  const handleServiceSelect = (service: { title: string; startingPrice: string; idealFor?: string[] }) => {
     setSelectedService(service);
     setModalOpen(true);
   };
+
+  const servicesList = (lang === 'en' && siteSettings.services && siteSettings.services.length > 0)
+    ? siteSettings.services
+    : t.services.cards;
 
   return (
     <>
@@ -49,12 +63,14 @@ export const ServicesSection: React.FC = () => {
 
           {/* Service Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {t.services.cards.map((service, index) => {
+            {servicesList.map((service, index) => {
               const origService = servicesData[index] || servicesData[0];
-              const Icon = iconMap[origService.iconName] || Sparkles;
+              const iconKey = (service as any).iconName || origService.iconName;
+              const Icon = iconMap[iconKey] || Sparkles;
+              const demoId = (service as any).recommendedDemoId || origService.recommendedDemoId;
               return (
                 <div
-                  key={service.id}
+                  key={service.id || index}
                   className="rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/80 p-6 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-sky-500/40 dark:hover:border-sky-400/40 transition-all duration-200 group"
                 >
                   <div className="space-y-4">
@@ -92,7 +108,7 @@ export const ServicesSection: React.FC = () => {
                         {t.services.idealFor}
                       </span>
                       <div className="flex flex-wrap gap-1.5">
-                        {service.idealFor.map((item, i) => (
+                        {service.idealFor?.map((item, i) => (
                           <span
                             key={i}
                             className="text-[11px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-700/60 text-slate-700 dark:text-slate-300 font-medium"
@@ -109,7 +125,7 @@ export const ServicesSection: React.FC = () => {
                         {t.services.included}
                       </span>
                       <ul className="space-y-1.5">
-                        {service.features.map((feat, idx) => (
+                        {service.features?.map((feat, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 dark:text-slate-300">
                             <Check className="w-3.5 h-3.5 text-emerald-500 mt-0.5 shrink-0" />
                             <span>{feat}</span>
@@ -129,9 +145,9 @@ export const ServicesSection: React.FC = () => {
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
 
-                    {origService.recommendedDemoId && (
+                    {demoId && (
                       <Link
-                        to={`/demos/${origService.recommendedDemoId}`}
+                        to={`/demos/${demoId}`}
                         className="w-full inline-flex items-center justify-center gap-1.5 py-1.5 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition"
                       >
                         <span>{t.services.previewDemo}</span>

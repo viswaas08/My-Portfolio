@@ -8,11 +8,13 @@ import {
   Sparkles, 
   ChevronRight,
   PhoneCall,
-  Languages
+  Languages,
+  ShieldCheck
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { siteConfig } from '../config/siteConfig';
+import { SiteSettingsService } from '../services/siteSettingsService';
 import { ClientInquiryModal } from './ClientInquiryModal';
 
 export const Navbar: React.FC = () => {
@@ -21,6 +23,7 @@ export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [siteSettings, setSiteSettings] = useState(SiteSettingsService.getSettings());
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -28,8 +31,15 @@ export const Navbar: React.FC = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    const handleSettingsUpdate = () => {
+      setSiteSettings(SiteSettingsService.getSettings());
+    };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('site_settings_updated', handleSettingsUpdate);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('site_settings_updated', handleSettingsUpdate);
+    };
   }, []);
 
   // Close mobile menu on route change
@@ -97,7 +107,7 @@ export const Navbar: React.FC = () => {
               </div>
               <div className="flex flex-col">
                 <span className="font-extrabold text-base sm:text-xl tracking-tight text-slate-900 dark:text-white leading-none">
-                  {siteConfig.brand.name}
+                  {siteSettings.brand.name || siteConfig.brand.name}
                 </span>
                 <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider sm:tracking-widest text-sky-600 dark:text-sky-400">
                   {lang === 'ta' ? 'உள்ளூர் வணிக தளம்' : 'Websites for Local Business'}
@@ -154,6 +164,16 @@ export const Navbar: React.FC = () => {
                   <Moon className="w-4 h-4 text-slate-700" />
                 )}
               </button>
+
+              {/* Desktop Admin Portal Shortcut */}
+              <Link
+                to="/admin"
+                title="Admin Control Center (Prices & Details)"
+                aria-label="Admin Control Center"
+                className="hidden md:inline-flex p-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-xs"
+              >
+                <ShieldCheck className="w-4 h-4 text-sky-500" />
+              </Link>
 
               {/* Consultation / CTA Button */}
               <button
@@ -242,19 +262,20 @@ export const Navbar: React.FC = () => {
             </button>
 
             <a
-              href={`tel:${siteConfig.contact.whatsappNumber}`}
+              href={`tel:${siteSettings.contact.whatsappNumber || siteConfig.contact.whatsappNumber}`}
               className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium"
             >
               <PhoneCall className="w-4 h-4 text-emerald-500" />
-              {t.nav.callDirect} {siteConfig.contact.phoneDisplay}
+              {t.nav.callDirect} {siteSettings.contact.phoneDisplay || siteConfig.contact.phoneDisplay}
             </a>
 
             <Link
               to="/admin"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-1.5 py-2 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-xs transition font-medium"
+              className="w-full flex items-center justify-center gap-1.5 py-2.5 text-sky-600 dark:text-sky-400 font-semibold bg-sky-50 dark:bg-sky-950/40 rounded-xl border border-sky-200 dark:border-sky-800/60 text-xs transition"
             >
-              <span>{lang === 'ta' ? 'நிர்வாக போர்ட்டல் (Admin)' : 'Admin Portal (Plan Pricing & CRM)'}</span>
+              <ShieldCheck className="w-3.5 h-3.5 text-sky-500" />
+              <span>{lang === 'ta' ? 'நிர்வாக போர்ட்டல் (Admin Control)' : 'Admin Control (Prices & Details)'}</span>
               <ChevronRight className="w-3.5 h-3.5" />
             </Link>
           </div>

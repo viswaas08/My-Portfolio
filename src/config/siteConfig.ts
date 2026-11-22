@@ -42,10 +42,25 @@ export const siteConfig: SiteConfig = {
 };
 
 /**
- * Generates a pre-filled direct WhatsApp link
+ * Generates a pre-filled direct WhatsApp link using live dynamic settings
  * @param customMessage Optional custom message text
  */
 export function getWhatsAppUrl(customMessage?: string): string {
+  try {
+    const data = localStorage.getItem('viswaa_site_settings_v1');
+    if (data) {
+      const parsed = JSON.parse(data);
+      const rawNumber = parsed.contact?.whatsappNumber || siteConfig.contact.whatsappNumber;
+      const cleanNumber = rawNumber.replace(/[^0-9]/g, "");
+      const devName = parsed.brand?.developer || "Viswaas";
+      const brandName = parsed.brand?.name || "Viswaa Web";
+      const defaultMsg = `Hi ${devName}, I saw your portfolio on ${brandName} and would like to discuss a website for my business.`;
+      const encodedText = encodeURIComponent(customMessage || defaultMsg);
+      return `https://wa.me/${cleanNumber}?text=${encodedText}`;
+    }
+  } catch {
+    // fallback to static siteConfig
+  }
   const cleanNumber = siteConfig.contact.whatsappNumber.replace(/[^0-9]/g, "");
   const defaultMsg = "Hi Viswaas, I saw your portfolio on Viswaa Web and would like to discuss a website for my business.";
   const encodedText = encodeURIComponent(customMessage || defaultMsg);

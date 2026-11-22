@@ -6,6 +6,7 @@ import { BrandCustomizerProvider } from './context/BrandCustomizerContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
+import { AnnouncementBar } from './components/AnnouncementBar';
 
 // Agency Pages
 import { Home } from './pages/Home';
@@ -22,6 +23,7 @@ import { AdminLayout } from './pages/admin/AdminLayout';
 import { AdminLogin } from './pages/admin/AdminLogin';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminPricing } from './pages/admin/AdminPricing';
+import { AdminWebsiteSettings } from './pages/admin/AdminWebsiteSettings';
 import { AdminClients } from './pages/admin/AdminClients';
 import { AdminWebsites } from './pages/admin/AdminWebsites';
 import { AdminLeads } from './pages/admin/AdminLeads';
@@ -60,6 +62,7 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors overflow-x-hidden w-full relative">
       <ScrollToTop />
+      {!isDemoPage && !isAdminPage && <AnnouncementBar />}
       {!isDemoPage && !isAdminPage && <Navbar />}
 
       <div className="flex-1">
@@ -73,11 +76,13 @@ function AppContent() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/onboarding" element={<ClientOnboardingPage />} />
 
-          {/* Master Admin Portal (with Plan Pricing Editor) */}
+          {/* Master Admin Portal (with Plan Pricing & Website Details Editor) */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="pricing" element={<AdminPricing />} />
+            <Route path="settings" element={<AdminWebsiteSettings />} />
+            <Route path="details" element={<AdminWebsiteSettings />} />
             <Route path="clients" element={<AdminClients />} />
             <Route path="websites" element={<AdminWebsites />} />
             <Route path="leads" element={<AdminLeads />} />
@@ -89,6 +94,8 @@ function AppContent() {
           <Route path="/agency" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             <Route path="pricing" element={<AdminPricing />} />
+            <Route path="settings" element={<AdminWebsiteSettings />} />
+            <Route path="details" element={<AdminWebsiteSettings />} />
             <Route path="clients" element={<AdminClients />} />
             <Route path="websites" element={<AdminWebsites />} />
             <Route path="leads" element={<AdminLeads />} />
