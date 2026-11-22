@@ -16,12 +16,12 @@ export interface ServiceItem {
 export const servicesData: ServiceItem[] = [
   {
     id: "business-website",
-    title: "Business Website",
+    title: "Static & Business Website",
     badge: "Fast Launch",
     subtitle: "Clean, high-impact online storefront for local shops, clinics, and service providers.",
     idealFor: ["Retail Shops", "Local Services", "Clinics", "Tuition Centres", "Home Businesses"],
-    startingPrice: "₹4,999",
-    priceValue: 4999,
+    startingPrice: "₹7,999",
+    priceValue: 7999,
     features: [
       "100% Mobile responsive layout",
       "Home, About & Services showcase",
@@ -38,12 +38,12 @@ export const servicesData: ServiceItem[] = [
   },
   {
     id: "restaurant-cafe-website",
-    title: "Restaurant & Cafe Website",
+    title: "Business Plan (All Features)",
     badge: "High Conversion",
     subtitle: "Mouth-watering digital presence with interactive categorization, digital menu, and table booking.",
     idealFor: ["Restaurants", "Cafes", "Bakeries", "Food Trucks", "Cloud Kitchens"],
-    startingPrice: "₹7,999",
-    priceValue: 7999,
+    startingPrice: "₹14,999",
+    priceValue: 14999,
     features: [
       "Interactive Digital Menu with categories",
       "High-resolution dish cards with pricing",

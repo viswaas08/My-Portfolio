@@ -11,7 +11,9 @@ export const Home: React.FC = () => {
   return (
     <main>
       <Hero />
-      <DemosSection />
+      <div className="hidden md:block">
+        <DemosSection />
+      </div>
       <PricingSection />
       <ProcessSection />
       <WhyChooseMe />

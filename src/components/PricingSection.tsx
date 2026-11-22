@@ -25,7 +25,7 @@ export const PricingSection: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [tiers, setTiers] = useState<PricingTier[]>(PricingService.getPricingTiers());
   const [monthlyPlans, setMonthlyPlans] = useState<MaintenancePlan[]>(PricingService.getMaintenancePlans());
-  const [selectedPkg, setSelectedPkg] = useState<string>('Business Plan (All Features) (₹7,999)');
+  const [selectedPkg, setSelectedPkg] = useState<string>('Business Plan (All Features) (₹14,999)');
 
   useEffect(() => {
     const handleUpdate = () => {

@@ -23,8 +23,8 @@ export const pricingPackages: PricingTier[] = [
     id: "static-landing",
     name: "Static Web Page / Landing Page",
     badge: "Fast Launch",
-    price: "₹2,999",
-    numericPrice: 2999,
+    price: "₹7,999",
+    numericPrice: 7999,
     tagline: "High-impact, mobile-optimized single page designed to capture local leads and drive instant WhatsApp calls.",
     bestFor: "Single-service providers, local shops, product promotions, portfolio showcases, and quick launches.",
     idealFor: ["Local Retailers", "Clinics", "Freelancers", "Home Businesses", "Promotions"],
@@ -42,15 +42,15 @@ export const pricingPackages: PricingTier[] = [
       "Fast cloud hosting deployment (Netlify / Vercel)"
     ],
     ctaText: "Choose Landing Page",
-    whatsappMessage: "Hi Viswaas, I want to get started with the Static Web Page / Landing Page plan (₹2,999) for my business.",
+    whatsappMessage: "Hi Viswaas, I want to get started with the Static Web Page / Landing Page plan (₹7,999) for my business.",
     recommendedDemoId: "shop"
   },
   {
     id: "business",
     name: "Business Plan (All Features)",
     badge: "High Conversion",
-    price: "₹7,999",
-    numericPrice: 7999,
+    price: "₹14,999",
+    numericPrice: 14999,
     popular: true,
     tagline: "Comprehensive multi-page digital presence equipped with all interactive features, digital catalog, and local SEO.",
     bestFor: "Restaurants, cafes, bakeries, salons, gyms, dental clinics, and growing local brand storefronts.",
@@ -72,7 +72,7 @@ export const pricingPackages: PricingTier[] = [
       "14 days dedicated post-launch support"
     ],
     ctaText: "Choose Business Plan",
-    whatsappMessage: "Hi Viswaas, I want to choose the Business Plan with All Features (₹7,999 - Most Popular) for my business.",
+    whatsappMessage: "Hi Viswaas, I want to choose the Business Plan with All Features (₹14,999 - Most Popular) for my business.",
     recommendedDemoId: "restaurant"
   },
   {

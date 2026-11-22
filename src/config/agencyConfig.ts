@@ -4,8 +4,8 @@ export const agencyPricing = {
   starter: {
     id: 'starter' as const,
     name: 'Static Web Page / Landing Page',
-    price: '₹2,999',
-    numericPrice: 2999,
+    price: '₹7,999',
+    numericPrice: 7999,
     target: 'Single-service businesses, local shops, product promotions, portfolio showcases',
     pages: '1 Page',
     features: [
@@ -20,8 +20,8 @@ export const agencyPricing = {
   business: {
     id: 'business' as const,
     name: 'Business Plan (All Features)',
-    price: '₹7,999',
-    numericPrice: 7999,
+    price: '₹14,999',
+    numericPrice: 14999,
     popular: true,
     badge: 'MOST POPULAR',
     target: 'Restaurants, cafes, bakeries, salons, gyms, and growing local businesses',

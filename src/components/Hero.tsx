@@ -61,13 +61,13 @@ export const Hero: React.FC = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
-                <Link
-                  to="/demos"
+                <a
+                  href="#pricing"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-semibold shadow-lg shadow-sky-600/25 transition cursor-pointer text-sm sm:text-base group"
                 >
-                  <span>{t.hero.viewDemos}</span>
+                  <span>{lang === 'ta' ? 'கட்டண திட்டங்களைப் பார்க்க' : 'View Pricing Plans'}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition" />
-                </Link>
+                </a>
 
                 <button
                   onClick={() => setModalOpen(true)}
@@ -105,8 +105,8 @@ export const Hero: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Visual: Realistic Restaurant Website Preview on Desktop & Mobile */}
-            <div className="lg:col-span-5 relative max-w-md sm:max-w-xl mx-auto lg:max-w-none w-full">
+            {/* Right Visual: Realistic Restaurant Website Preview on Desktop (Hidden on mobile for clean first view) */}
+            <div className="hidden lg:block lg:col-span-5 relative max-w-md sm:max-w-xl mx-auto lg:max-w-none w-full">
               {/* Desktop Mockup Frame */}
               <div className="relative rounded-2xl bg-slate-900 border border-slate-700/80 shadow-2xl overflow-hidden">
                 {/* Browser top chrome */}
