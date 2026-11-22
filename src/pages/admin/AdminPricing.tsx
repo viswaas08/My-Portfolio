@@ -197,6 +197,35 @@ export const AdminPricing: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Plan Name */}
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1.5">
+                Plan Title / Name
+              </label>
+              <input
+                type="text"
+                value={activeTier.name}
+                onChange={(e) => handleUpdateActiveTier({ name: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                placeholder="e.g. Business Website"
+              />
+            </div>
+
+            {/* Pill Badge */}
+            <div>
+              <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                <span>Card Badge</span>
+                <span className="text-[10px] text-slate-400">e.g. High Conversion</span>
+              </label>
+              <input
+                type="text"
+                value={activeTier.badge || ''}
+                onChange={(e) => handleUpdateActiveTier({ badge: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
+                placeholder="e.g. Fast Launch / High Conversion"
+              />
+            </div>
+
             {/* Display Price */}
             <div>
               <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
@@ -257,6 +286,29 @@ export const AdminPricing: React.FC = () => {
                 className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none"
                 placeholder="3 rounds"
               />
+            </div>
+
+            {/* Associated Demo */}
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center justify-between">
+                <span>Recommended Demo Shortcut</span>
+                <span className="text-[10px] text-slate-400">Links directly to live interactive demo preview</span>
+              </label>
+              <select
+                value={activeTier.recommendedDemoId || ''}
+                onChange={(e) => handleUpdateActiveTier({ recommendedDemoId: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:border-sky-500 focus:outline-none cursor-pointer"
+              >
+                <option value="">None</option>
+                <option value="restaurant">Restaurant Demo (/demos/restaurant)</option>
+                <option value="cafe">Cafe Demo (/demos/cafe)</option>
+                <option value="bakery">Bakery Demo (/demos/bakery)</option>
+                <option value="shop">Retail Shop Demo (/demos/shop)</option>
+                <option value="salon">Salon Demo (/demos/salon)</option>
+                <option value="gym">Gym & Fitness Demo (/demos/gym)</option>
+                <option value="tuition">Tuition Academy Demo (/demos/tuition)</option>
+                <option value="clinic">Clinic Demo (/demos/clinic)</option>
+              </select>
             </div>
           </div>
 
@@ -401,10 +453,16 @@ export const AdminPricing: React.FC = () => {
             )}
 
             <div className="space-y-5">
-              <div>
+              <div className="flex items-start justify-between gap-2">
                 <h3 className="text-xl font-bold text-white">
                   {activeTier.name}
                 </h3>
+                {activeTier.badge && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20 shrink-0">
+                    {activeTier.badge}
+                  </span>
+                )}
+              </div>
                 <p className="text-xs text-slate-400 mt-1 min-h-[32px]">
                   {activeTier.tagline}
                 </p>

@@ -93,24 +93,19 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  {t.nav.services}
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  {t.nav.pricing}
-                </Link>
-              </li>
-              <li>
                 <Link to="/demos" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
                   {t.nav.demos}
                 </Link>
               </li>
               <li>
-                <Link to="/projects" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
-                  {t.nav.projects}
-                </Link>
+                <a href="/#pricing" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
+                  {t.nav.pricing}
+                </a>
+              </li>
+              <li>
+                <a href="/#process" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">
+                  {t.nav.process}
+                </a>
               </li>
               <li>
                 <Link to="/contact" className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition">

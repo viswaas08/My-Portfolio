@@ -61,12 +61,10 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { label: t.nav.home, path: '/' },
-    { label: t.nav.services, path: '/services' },
-    { label: t.nav.pricing, path: '/pricing' },
     { label: t.nav.demos, path: '/demos', highlight: true },
-    { label: lang === 'ta' ? 'திட்டம் பதிவு' : 'Start Project', path: '/onboarding' },
+    { label: t.nav.pricing, path: '/#pricing', isHash: true },
     { label: t.nav.process, path: '/#process', isHash: true },
-    { label: t.nav.projects, path: '/projects' },
+    { label: lang === 'ta' ? 'திட்டம் பதிவு' : 'Start Project', path: '/onboarding' },
     { label: t.nav.contact, path: '/contact' },
   ];
 

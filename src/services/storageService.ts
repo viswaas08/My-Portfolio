@@ -1,9 +1,15 @@
 import { ClientRecord, LeadRecord } from '../types/agency';
 import { initialClients, initialLeads } from '../config/agencyConfig';
 
-const CLIENTS_STORAGE_KEY = 'viswaa_agency_clients_v1';
-const LEADS_STORAGE_KEY = 'viswaa_agency_leads_v1';
+const CLIENTS_STORAGE_KEY = 'viswaa_agency_clients_clean_v2';
+const LEADS_STORAGE_KEY = 'viswaa_agency_leads_clean_v2';
 const AUTH_STORAGE_KEY = 'viswaa_agency_auth_token_v1';
+
+// Purge legacy seeded keys if present
+try {
+  localStorage.removeItem('viswaa_agency_clients_v1');
+  localStorage.removeItem('viswaa_agency_leads_v1');
+} catch {}
 
 export class StorageService {
   /**

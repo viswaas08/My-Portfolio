@@ -1,96 +1,123 @@
 export interface PricingTier {
   id: string;
   name: string;
+  badge?: string;
   price: string;
   numericPrice?: number;
   period?: string;
   popular?: boolean;
   tagline: string;
   bestFor: string;
+  idealFor?: string[];
   delivery: string;
   revisions: string;
   features: string[];
   ctaText: string;
   whatsappMessage: string;
+  recommendedDemoId?: string;
 }
 
 export const pricingPackages: PricingTier[] = [
   {
     id: "starter",
-    name: "Starter",
+    name: "Business Website",
+    badge: "Fast Launch",
     price: "₹4,999",
     numericPrice: 4999,
-    tagline: "The essential online launchpad for local shops and neighborhood services.",
-    bestFor: "Small shops, single-service providers, and local businesses taking their first step online.",
-    delivery: "5–7 days",
+    tagline: "Clean, high-impact online storefront for local shops, clinics, and service providers.",
+    bestFor: "Small shops, single-service providers, clinics, tuition centres, and home businesses.",
+    idealFor: ["Retail Shops", "Local Services", "Clinics", "Tuition Centres", "Home Businesses"],
+    delivery: "3–5 days",
     revisions: "2 rounds",
     features: [
-      "1–3 Modern responsive pages",
-      "Mobile-first responsive design",
-      "Business information & about section",
-      "Services or products showcase",
-      "One-click WhatsApp chat button",
-      "Interactive Google Maps location",
-      "Contact details & enquiry form",
-      "Social media links integration",
-      "Basic on-page SEO setup",
-      "Fast deployment on cloud hosting"
+      "100% Mobile responsive layout",
+      "Home, About & Services showcase",
+      "One-tap WhatsApp direct chat button",
+      "Interactive Google Maps store location",
+      "Click-to-call phone & email contact",
+      "Social media profile integration",
+      "Basic on-page local SEO setup",
+      "High-speed cloud deployment"
     ],
-    ctaText: "Choose Starter",
-    whatsappMessage: "Hi Viswaas, I want to get started with the Starter Package (₹4,999) for my business."
+    ctaText: "Choose Business Website",
+    whatsappMessage: "Hi Viswaas, I want to get started with the Business Website plan (₹4,999) for my shop/business.",
+    recommendedDemoId: "shop"
   },
   {
     id: "business",
-    name: "Business",
-    price: "₹9,999",
-    numericPrice: 9999,
+    name: "Restaurant & Cafe Website",
+    badge: "High Conversion",
+    price: "₹7,999",
+    numericPrice: 7999,
     popular: true,
-    tagline: "Our high-impact package with rich visual presentation and interactive features.",
-    bestFor: "Restaurants, cafes, bakeries, salons, gyms, and growing local brands wanting standout quality.",
-    delivery: "7–10 days",
+    tagline: "Mouth-watering digital presence with interactive categorization, digital menu, and table booking.",
+    bestFor: "Restaurants, cafes, bakeries, food trucks, cloud kitchens, salons, and gyms.",
+    idealFor: ["Restaurants", "Cafes", "Bakeries", "Food Trucks", "Cloud Kitchens"],
+    delivery: "5–7 days",
     revisions: "3 rounds",
     features: [
-      "5–7 Premium responsive pages / sections",
-      "Custom aesthetic branding & tailored color scheme",
-      "Interactive Digital Menu / Services catalog with filters",
-      "High-res photo gallery (Ambience, dishes, facilities)",
-      "Integrated WhatsApp ordering / booking links",
-      "Google Maps integration with quick directions",
-      "Detailed contact & enquiry form with validation",
-      "Live opening hours & weekly schedule widget",
-      "Customer reviews & trust badges showcase",
-      "Local SEO optimization & Open Graph preview tags",
-      "Social media feeds & integration",
-      "Mobile speed & performance optimization",
-      "Fast deployment + 14 days post-launch support"
+      "Interactive Digital Menu with categories",
+      "High-resolution dish cards with pricing",
+      "Direct WhatsApp Food Order placement",
+      "Table Reservation & Party enquiry form",
+      "Live Opening Hours & Weekly timings",
+      "Photo gallery for ambience & food",
+      "Customer testimonials & review highlights",
+      "Instant Google Maps directions link",
+      "Custom domain connection guidance"
     ],
-    ctaText: "Choose Business",
-    whatsappMessage: "Hi Viswaas, I want to choose the Business Package (₹9,999 - Most Popular) for my business website."
+    ctaText: "Choose Restaurant Website",
+    whatsappMessage: "Hi Viswaas, I want to choose the Restaurant & Cafe Website plan (₹7,999 - Most Popular) for my food business.",
+    recommendedDemoId: "restaurant"
   },
   {
     id: "pro-web-app",
-    name: "Pro Web App",
-    price: "₹19,999+",
+    name: "Business Web Application",
+    badge: "Advanced Functionality",
+    price: "₹19,999",
     numericPrice: 19999,
-    tagline: "Custom web software with databases, member logins, and administrative control.",
-    bestFor: "Businesses requiring dynamic data management, customer portals, or bespoke operational workflows.",
-    delivery: "Discuss based on requirements",
+    tagline: "Custom operational software, client portals, and administrative dashboard systems.",
+    bestFor: "Gyms with memberships, tuition & academies, appointment clinics, and multi-branch operations.",
+    idealFor: ["Gyms with Memberships", "Tuition & Academies", "Appointment Clinics", "Multi-branch Ops"],
+    delivery: "10–14 days",
     revisions: "Dedicated milestone reviews",
     features: [
-      "Full React / modern web app frontend",
-      "Secure Backend API & database architecture",
-      "Role-based authentication (Admin / Staff / Client)",
-      "Custom Admin Dashboard with live statistics",
-      "Full CRUD functionality (add, edit, delete records)",
-      "User management & customer directory",
+      "Secure Role-based User Authentication",
+      "Custom Admin Dashboard with live metrics",
+      "Full Database setup (PostgreSQL / MongoDB)",
+      "Automated CRUD data management",
+      "Client enquiry & member tracking",
+      "Exportable reports (Excel / PDF / CSV)",
       "Custom business workflow automation",
-      "Automated PDF receipts / report generation",
-      "Third-party API & payment gateway hooks",
-      "Scalable cloud deployment with database backups",
-      "Complete handover walkthrough & documentation"
+      "API integrations & secure cloud deployment"
     ],
-    ctaText: "Discuss My Project",
-    whatsappMessage: "Hi Viswaas, I have requirements for a custom Pro Web App (₹19,999+) and would like to discuss the scope."
+    ctaText: "Discuss Web Application",
+    whatsappMessage: "Hi Viswaas, I have requirements for a custom Business Web Application (₹19,999+) and want to discuss.",
+    recommendedDemoId: "gym"
+  },
+  {
+    id: "custom",
+    name: "Custom Tailored Website",
+    badge: "Bespoke Architecture",
+    price: "Custom Quote",
+    numericPrice: 0,
+    tagline: "Tailored from ground up with specialized animations, custom calculators, or external system hooks.",
+    bestFor: "Specialized brands, franchises, unique business models, and full company rebranding.",
+    idealFor: ["Specialized Brands", "Franchises", "Unique Business Models", "Full Rebranding"],
+    delivery: "Custom Timeline",
+    revisions: "Unlimited during milestone",
+    features: [
+      "Bespoke UI/UX crafted to your brand guidelines",
+      "Interactive custom calculators & quoting tools",
+      "Multilingual language toggle support",
+      "Third-party CRM / WhatsApp automation hooks",
+      "Advanced page transition animations",
+      "Comprehensive speed & Core Web Vitals optimization",
+      "Priority post-launch support"
+    ],
+    ctaText: "Request a Custom Quote",
+    whatsappMessage: "Hi Viswaas, I want to discuss a Custom Tailored Website project for my brand.",
+    recommendedDemoId: "clinic"
   }
 ];
 
