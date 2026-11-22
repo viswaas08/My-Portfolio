@@ -31,7 +31,7 @@ export type PaymentStatus =
   | 'Pending Final'
   | 'Overdue';
 
-export type MaintenancePlanId = 'none' | 'website-care' | 'advanced-care';
+export type MaintenancePlanId = 'none' | 'monthly-overview' | 'instant-everyday' | 'website-care' | 'advanced-care' | string;
 
 export type LeadSource =
   | 'Website'

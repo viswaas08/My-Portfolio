@@ -3,24 +3,23 @@ import { ClientRecord, LeadRecord, MaintenancePlan } from '../types/agency';
 export const agencyPricing = {
   starter: {
     id: 'starter' as const,
-    name: 'Business Website',
-    price: '₹4,999',
-    numericPrice: 4999,
-    target: 'Small shops, local services, clinics, tuition centres, and home businesses',
-    pages: '1–3 Pages',
+    name: 'Static Web Page / Landing Page',
+    price: '₹2,999',
+    numericPrice: 2999,
+    target: 'Single-service businesses, local shops, product promotions, portfolio showcases',
+    pages: '1 Page',
     features: [
       '100% Mobile responsive layout',
-      'Business profile, services & about section',
-      'Direct WhatsApp chat button',
+      'Hero section with direct Call-to-Action',
+      'Direct WhatsApp chat & call triggers',
       'Interactive Google Maps embed',
-      'Contact section & social links',
       'Basic on-page SEO setup',
-      'High-speed cloud deployment'
+      'Fast cloud deployment'
     ]
   },
   business: {
     id: 'business' as const,
-    name: 'Restaurant & Cafe Website',
+    name: 'Business Plan (All Features)',
     price: '₹7,999',
     numericPrice: 7999,
     popular: true,
@@ -40,28 +39,9 @@ export const agencyPricing = {
       'Custom domain connection guidance'
     ]
   },
-  proWebApp: {
-    id: 'pro-web-app' as const,
-    name: 'Business Web Application',
-    price: '₹19,999',
-    numericPrice: 19999,
-    target: 'Businesses requiring dynamic databases, admin dashboards, and custom workflows',
-    pages: 'Custom Architecture',
-    features: [
-      'Modern React frontend application',
-      'Secure Backend API & database architecture',
-      'Role-based authentication & admin dashboard',
-      'Full CRUD capability',
-      'Custom client enquiry & order workflows',
-      'User management & customer directory',
-      'Automated receipt / summary generator',
-      'Third-party API & service integration',
-      'Scalable cloud deployment with database backups'
-    ]
-  },
-  'pro-web-app': {
-    id: 'pro-web-app' as const,
-    name: 'Business Web Application',
+  enterprise: {
+    id: 'enterprise' as const,
+    name: 'Enterprise Level Plan',
     price: '₹19,999',
     numericPrice: 19999,
     target: 'Businesses requiring dynamic databases, admin dashboards, and custom workflows',
@@ -80,7 +60,7 @@ export const agencyPricing = {
   },
   custom: {
     id: 'custom' as const,
-    name: 'Custom Tailored Website',
+    name: 'Custom Build',
     price: 'Custom Quote',
     numericPrice: 0,
     target: 'Complex multi-branch platforms or unique digital solutions',
@@ -97,45 +77,44 @@ export const agencyPricing = {
 
 export const maintenancePlans: MaintenancePlan[] = [
   {
-    id: 'website-care',
-    name: 'Website Care',
-    price: '₹1,499/mo',
-    numericMonthlyPrice: 1499,
-    tagline: 'Essential maintenance for hands-off peace of mind.',
+    id: 'monthly-overview',
+    name: 'Monthly Overview Care',
+    price: '₹500/mo',
+    numericMonthlyPrice: 500,
+    badge: 'ESSENTIAL CARE',
+    tagline: 'Routine monthly website review, continuous uptime monitoring, and essential hosting peace of mind.',
     features: [
-      'Hosting & cloud deployment management',
-      'Continuous uptime & SSL status monitoring',
-      'Minor content changes (menu items, prices, banners)',
-      'Image uploads & gallery updates (up to 5 per month)',
-      'Small UI bug fixes & browser compatibility checks',
-      'Technical support via WhatsApp'
+      'Monthly overall website health & performance review',
+      'Continuous 24/7 uptime & SSL security certificate monitoring',
+      'Hosting & cloud deployment infrastructure management',
+      'Minor content adjustments (banners, phone/address changes)',
+      'Monthly backup verification and security check',
+      'Standard WhatsApp support response'
     ],
     disclaimers: [
-      'Does not include major feature rebuilds or new page development',
+      'Includes basic content edits and infrastructure care',
       'Domain renewal fee is billed directly by client registrar'
     ]
   },
   {
-    id: 'advanced-care',
-    name: 'Advanced Website Care',
-    price: '₹2,999/mo',
-    numericMonthlyPrice: 2999,
-    badge: 'RECOMMENDED FOR ACTIVE SITES',
-    tagline: 'Comprehensive maintenance, local SEO care, and monthly health review.',
+    id: 'instant-everyday',
+    name: 'Instant & Everyday Review (Lots of Updates)',
+    price: '₹1,000/mo',
+    numericMonthlyPrice: 1000,
+    badge: 'ACTIVE BUSINESS CHOICE',
+    tagline: 'Day-to-day website monitoring with instant same-day menu, dish, price, and gallery updates.',
     features: [
-      'Everything in Website Care included',
-      'Google Business Profile maintenance assistance',
-      'Google Search Console crawl error monitoring',
-      'Basic local SEO tracking & keyword monitoring',
-      'Monthly website health & performance review report',
-      'More frequent content updates (up to 15 per month)',
+      'Everyday website review, monitoring, and proactive checks',
+      'Instant same-day updates for menus, dishes, and price lists',
+      'Frequent photo gallery additions and announcement banners',
+      'Google Business Profile & local Google Search ranking tracking',
       'Core Web Vitals & mobile load speed optimizations',
-      'Priority same-day WhatsApp support'
+      'Priority same-day WhatsApp and direct phone developer access',
+      'Emergency rapid bug fix guarantee within hours'
     ],
     disclaimers: [
-      'We do NOT guarantee #1 Google rankings or specific search position',
-      'We do NOT promise guaranteed customer counts, calls, or revenue',
-      'External infrastructure surges beyond standard usage billed after client notification'
+      'Ideal for restaurants, cafes, and active businesses updating frequently',
+      'Infrastructure surges beyond standard allowances notified prior to billing'
     ]
   }
 ];

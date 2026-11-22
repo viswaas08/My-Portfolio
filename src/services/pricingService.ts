@@ -2,8 +2,8 @@ import { PricingTier, pricingPackages as defaultPricingPackages } from '../data/
 import { MaintenancePlan } from '../types/agency';
 import { maintenancePlans as defaultMaintenancePlans } from '../config/agencyConfig';
 
-const PRICING_STORAGE_KEY = 'viswaa_pricing_plans_v3';
-const MAINTENANCE_STORAGE_KEY = 'viswaa_maintenance_plans_v2';
+const PRICING_STORAGE_KEY = 'viswaa_pricing_plans_v5';
+const MAINTENANCE_STORAGE_KEY = 'viswaa_maintenance_plans_v4';
 
 export class PricingService {
   /**
